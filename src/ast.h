@@ -37,7 +37,12 @@ struct ast
 {
   struct ast_node *value;
   size_t nb_children;
-  struct ast child[];
+  struct ast **children;
 };
+
+struct ast *ast_create();
+void ast_destroy(struct ast *ast);
+struct ast_node *ast_node_create();
+void ast_node_destroy(struct ast_node *ast_node);
 
 #endif /* AST_H */
