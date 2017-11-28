@@ -1,3 +1,27 @@
-.*swp
-.*swo
+# Ignore all (to avoid binaries without extension)
+*
+# Unignore files with extension and directories
+!*.*
+!*/
+
+!README
+!Makefile
+!TODO
+!AUTHORS
+!Doxyfile
+
+# My usual ignored files
+*.txt
+*~
+*.swp
+*.swo
 *.o
+*.a
+*.so
+*.class
+*.log
+*.core
+*.pdf
+*.out
+*.cson
+*.tar.gz
