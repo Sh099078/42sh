@@ -1,15 +1,21 @@
-PARSER
+# PARSER
   ast printer []
   ast create  []
   ast exec    []
   ast destroy []
 
-LEXER
+# LEXER
   buffer               []
   token getter         []
   token classification []
 
-PROMPT
+# PROMPT
   interactive mode  []
   input from file   []
   '-c' option       []
+
+# OPTIONS
+  GNU long options           []
+  short options              []
+    shopt options            []
+    -c option (with files)   []
