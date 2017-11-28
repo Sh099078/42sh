@@ -1,3 +1,6 @@
+#ifndef OPTIONS_H
+#define OPTIONS_H
+
 /**
 ** @file options.h
 ** @brief 
@@ -5,6 +8,10 @@
 ** @version 0.5
 ** @date 2017-11-28
 */
+
+#include <stddef.h>
+#include <string.h>
+#include <err.h>
 
 /***
  * GNU long options
@@ -36,9 +43,11 @@ enum shopt_vars
 struct options
 {
   char shopt_vars;
-  char ast_print; // shopt_vars already holds the information. useless?
   char norc;
   char version;
 };
 
 struct options options_get(int argc, char *argv[]);
+struct options options_create(void);
+
+#endif /* OPTIONS_H */
