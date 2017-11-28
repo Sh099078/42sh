@@ -48,6 +48,5 @@ struct options
 };
 
 struct options options_get(int argc, char *argv[]);
-struct options options_create(void);
 
 #endif /* OPTIONS_H */
