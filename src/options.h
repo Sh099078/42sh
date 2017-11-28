@@ -43,8 +43,11 @@ enum shopt_vars
 struct options
 {
   char shopt_vars;
+  char c;
   char norc;
   char version;
+  char **files; // points to one argv's element (no free needed)
+  size_t files_len;
 };
 
 struct options options_get(int argc, char *argv[]);
