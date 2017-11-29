@@ -26,16 +26,10 @@ enum node_type
   CASE_ITEM
 };
 
-struct ast_node
-{
-  size_t nb_args;
-  char **args;
-  enum node_type type;
-};
-
 struct ast
 {
-  struct ast_node *value;
+  char *value;
+  enum node_type type;
   size_t nb_children;
   struct ast **children;
 };
