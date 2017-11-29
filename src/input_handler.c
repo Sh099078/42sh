@@ -29,8 +29,9 @@ char *get_next_line(FILE *input, const char *curr_line)
   ssize_t nb_read = getline(&line, &line_sz, input);
   if (nb_read == -1)
     return NULL; /* end of input */
+  if (line)
+    line[nb_read - 1] = 0;
   if (!curr_line && nb_read != -1)
     return line; /* first attempt to build an ast */
   return str_concat(curr_line, line); /* new attempt to build the ast */
 }
-
