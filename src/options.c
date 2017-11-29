@@ -67,21 +67,64 @@ static void options_long_get(size_t argc, char **argv,
   }
 }
 
+/**
+ ** @brief parse the -c bash option, once every short options have been seen
+ */
 static void options_c(size_t argc, char **argv,
                              struct options *opts, size_t *i)
 {
   // TODO
+  argc = argc;
+  argv = argv;
+  opts = opts;
+  i = i;
 }
 
-static void options_shopt(size_t argc, char **argv,
-                             struct options *opts, size_t *i)
+static void shopt_option_warn(const char *opt)
 {
   // TODO
+  opt = opt;
+} 
+static int is_shopt_option(const char *opt)
+{
+  // TODO
+  shopt_option_warn(opt);
+  opt = opt;
+  return 1;
+}
+
+static void shopt_handle_option(const char *opt, int set,
+                                struct options *opts)
+{
+  // TODO
+  set = set;
+  opt = opt;
+  opts = opts;
 }
 
 static int is_short_option(const char *opt)
 {
   return strlen(opt) > 1 && (opt[0] == '-' || opt[0] == '+');
+}
+
+/**
+ ** @brief parse [-+]O option, setting shopt variables
+ ** It only supports -s -u -q built-in options
+ */
+static void options_shopt(size_t argc, char **argv,
+                             struct options *opts, size_t *i)
+{
+  // TODO
+  argc = argc;
+  // -O sets the value, +O unsets it
+  // if value does not exist, print all available values
+  int is_set = argv[(*i)++][0] == '-';
+  for (; !is_short_option(argv[*i]); (*i)++)
+  {
+    if (!is_shopt_option(argv[*i]))
+      break;
+    shopt_handle_option(argv[*i], is_set, opts);
+  }
 }
 
 /**
@@ -98,6 +141,12 @@ static int is_end_option(const char *opt)
 static void options_short_get(size_t argc, char **argv,
                              struct options *opts, size_t *i)
 {
+  // TODO
+  argc = argc;
+  argv = argv;
+  opts = opts;
+  i = i;
+  int is_c_enabled = 0;
   for (; *i < argc && is_short_option(argv[*i]); (*i)++)
   {
     const char *opt = argv[*i] + 1;
@@ -107,12 +156,19 @@ static void options_short_get(size_t argc, char **argv,
       break;
     }
     if (!opt[1] && opt[0] == 'c')
-      // -c option
+      is_c_enabled = 1;
     else if (!opt[1] && opt[0] == 'O')
-      // +-O option
+      // +-O option TODO
+      options_shopt(argc, argv, opts, i);
     else
       errx(1, "%s: invalid option\n"
               "Usage: 42sh [GNU long options] [options] [file]", opt);
+  }
+  if (is_c_enabled)
+  {
+    // -c option string and files to handle, now that all options have been
+    // done
+    options_c(argc, argv, opts, i);
   }
 }
 
@@ -122,6 +178,11 @@ static void options_short_get(size_t argc, char **argv,
 static void options_files_get(size_t argc, char **argv,
                              struct options *opts, size_t *i)
 {
+  // TODO
+  argc = argc;
+  argv = argv;
+  opts = opts;
+  i = i;
 }
 
 struct options options_get(int argc, char *argv[])
