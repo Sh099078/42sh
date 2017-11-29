@@ -2,7 +2,7 @@
 
 #include "ast.h"
 
-struct ast *ast_create()
+/*struct ast *ast_create()
 {
   struct ast *ast = malloc(sizeof(struct ast));
   if (!ast)
@@ -39,4 +39,4 @@ void ast_node_destroy(struct ast_node *ast_node)
   if (ast_node->args)
     free(ast_node->args);
   free(ast_node);
-}
+}*/

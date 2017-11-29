@@ -2,14 +2,14 @@
 
 #include "lexor.h"
 
-static void update_index(const char *command, size_t *index)
+/*static void update_index(const char *command, size_t *index)
 {
   if (!command || strlen(command) < *index)
     return NULL;
   size_t beginning = *index;
   for (; command[(*index)]; (*index)++)
   {
-    /* token recognition */
+    // token recognition
     continue;
   }
 }
@@ -26,4 +26,4 @@ char *get_next_token(const char *command, size_t *index)
   token[*index -beginning] = 0; //null terminating byte.
   strncpy(token, command + beginning, *index - beginning);
   return token;
-}
+}*/
