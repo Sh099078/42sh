@@ -1,5 +1,7 @@
-#ifndef LEXOR_H
-#define LEXOR_H
+#ifndef LEXER_H
+#define LEXER_H
+
+#include "ast.h"
 
 /*
 ** Reads the command input looking for the next token according to
@@ -8,6 +10,6 @@
 ** RETURN VALUE: An allocated char* containing the copy of the next
 ** token found in the input.
 */
-char *get_next_token(const char *command, size_t *index);
+struct token get_next_token(const char *command, size_t *index)
 
-#endif /* LEXHOR_H */
+#endif /* LEXER_H */

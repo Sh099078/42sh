@@ -1,8 +1,8 @@
 #include <stdlib.h>
 
-#include "lexor.h"
+#include "lexer.h"
 
-/*static void update_index(const char *command, size_t *index)
+static enum token_type update_index(const char *command, size_t *index)
 {
   if (!command || strlen(command) < *index)
     return NULL;
@@ -14,16 +14,21 @@
   }
 }
 
-char *get_next_token(const char *command, size_t *index)
+struct token get_next_token(const char *command, size_t *index)
 {
   size_t beginning = *index;
   update_index(command, index);
   if (beginning == *index)
     return NULL;
-  char *token = malloc(sizeof(char) * (*index - beginning) + 1);
-  if (!token)
+  char *token_str = malloc(sizeof(char) * (*index - beginning) + 1);
+  if (!token_str)
     return NULL;
-  token[*index -beginning] = 0; //null terminating byte.
-  strncpy(token, command + beginning, *index - beginning);
+  token_str[*index - beginning] = 0; //null terminating byte.
+  strncpy(token_str, command + beginning, *index - beginning);
+  struct token token =
+  {
+    token_type,
+    token_str
+  };
   return token;
-}*/
+}
