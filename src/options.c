@@ -61,7 +61,7 @@ static void options_long_get(size_t argc, char **argv,
     else if (valid_opts[3][0] == opt[0] && strlen(opt) > strlen("ver")
         && is_beginning(opt, valid_opts[3]))
       opts->version = 1;
-    else 
+    else
       errx(1, "%s: invalid option\n"
               "Usage: 42sh [GNU long options] [options] [file]", opt);
   }
@@ -74,10 +74,10 @@ static void options_c(size_t argc, char **argv,
                              struct options *opts, size_t *i)
 {
   // TODO
+  opts->c = 1;
   // Have to clarify stuff about positional parameters first
   argc = argc;
   argv = argv;
-  opts = opts;
   i = i;
 }
 
@@ -107,7 +107,7 @@ static int shopt_handle_option(const char *opt, int set,
   {
     fprintf(stdout, "%s: invalid shopt option\n"
             "shopt_options available: ast_print dotglob expand_aliases"
-            " extglob nocaseglob nullglob sourcepath xpg_echo", opt);
+            " extglob nocaseglob nullglob sourcepath xpg_echo\n", opt);
     return 0;
   }
   return 1;
@@ -175,11 +175,11 @@ static void options_short_get(size_t argc, char **argv,
 static void options_files_get(size_t argc, char **argv,
                              struct options *opts, size_t *i)
 {
-  // TODO
-  argc = argc;
-  argv = argv;
-  opts = opts;
-  i = i;
+  if (*i  < argc)
+  {
+    opts->files = argv + *i;
+    opts->files_len = argc - *i;
+  }
 }
 
 struct options options_get(int argc, char *argv[])
