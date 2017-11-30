@@ -26,6 +26,19 @@ enum node_type
   CASE_ITEM
 };
 
+enum token_type
+{
+  WORD,
+  OPERATOR,
+  NAME
+};
+
+struct token
+{
+  enum token_type type;
+  char *token;
+};
+
 struct ast
 {
   char *value;
