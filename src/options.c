@@ -81,6 +81,14 @@ static void options_c(size_t argc, char **argv,
   i = i;
 }
 
+static void shopt_var_set(struct options *opts, int set, int shopt_var)
+{
+  if (set)
+    opts->shopt_vars |= shopt_var;
+  else
+    opts->shopt_vars -= shopt_var;
+}
+
 static int shopt_handle_option(const char *opt, int set,
                                 struct options *opts)
 {
@@ -88,21 +96,21 @@ static int shopt_handle_option(const char *opt, int set,
                             "extglob", "nocaseglob", "nullglob", "sourcepath",
                             "xpg_echo", 0 };
   if (!strcmp(shopt_options[0], opt))
-    opts->shopt_vars |= set ? AST_PRINT : 0;
+shopt_var_set(opts, set, AST_PRINT);
   else if (!strcmp(shopt_options[1], opt))
-    opts->shopt_vars |= set ? DOTGLOB : 0;
+shopt_var_set(opts, set, DOTGLOB);
   else if (!strcmp(shopt_options[2], opt))
-    opts->shopt_vars |= set ? EXPAND_ALIASES : 0;
+shopt_var_set(opts, set, EXPAND_ALIASES);
   else if (!strcmp(shopt_options[3], opt))
-    opts->shopt_vars |= set ? EXTGLOB : 0;
+shopt_var_set(opts, set, EXTGLOB);
   else if (!strcmp(shopt_options[4], opt))
-    opts->shopt_vars |= set ? NOCASEGLOB : 0;
+shopt_var_set(opts, set, NOCASEGLOB);
   else if (!strcmp(shopt_options[5], opt))
-    opts->shopt_vars |= set ? NULLGLOB : 0;
+shopt_var_set(opts, set, NULLGLOB);
   else if (!strcmp(shopt_options[6], opt))
-    opts->shopt_vars |= set ? SOURCEPATH : 0;
+shopt_var_set(opts, set, SOURCEPATH);
   else if (!strcmp(shopt_options[7], opt))
-    opts->shopt_vars |= set ? XPG_ECHO : 0;
+shopt_var_set(opts, set, XPG_ECHO);
   else
   {
     fprintf(stdout, "%s: invalid shopt option\n"
@@ -119,26 +127,25 @@ static int is_short_option(const char *opt)
 }
 
 /**
- ** @brief parse [-+]O option, setting shopt variables
- ** It only supports -s -u -q built-in options
- */
-static void options_shopt(size_t argc, char **argv,
-                             struct options *opts, size_t *i)
-{
-  int is_set = argv[(*i)++][0] == '-';
-  for (; *i < argc && !is_short_option(argv[*i]); (*i)++)
-  {
-    if (!shopt_handle_option(argv[*i], is_set, opts))
-      break;
-  }
-}
-
-/**
  ** @brief Checks if opt was the '--' end of options signal
  */
 static int is_end_option(const char *opt)
 {
   return !opt[1] && opt[0] == '-';
+}
+
+/**
+ ** @brief parse [-+]O option, setting shopt variables
+ */
+static void options_shopt(size_t argc, char **argv,
+                             struct options *opts, size_t *i)
+{
+  int is_set = argv[(*i)][0] == '-';
+  for (; *i + 1 < argc && !is_short_option(argv[*i + 1]); (*i)++)
+  {
+    if (!shopt_handle_option(argv[*i + 1], is_set, opts))
+      break;
+  }
 }
 
 /**
