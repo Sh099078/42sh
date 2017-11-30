@@ -6,6 +6,7 @@
 #include "parser.h"
 #include "ast_exec.h"
 #include "input_handler.h"
+#include "struct.h"
 
 static void error_handler(int return_value, char **line)
 {
@@ -26,6 +27,10 @@ static void error_handler(int return_value, char **line)
 
 int prompt(FILE *input)
 {
+  /*struct aliases_lst *aliases;
+  struct functions_lst *functions;
+  struct variables_lst *variables;
+  */
   char *line = NULL;
   int return_value = 0; //think about the 'echo $?' command.
   while (1)
