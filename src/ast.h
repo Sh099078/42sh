@@ -61,9 +61,9 @@ void ast_node_destroy(struct ast_node *ast_node);
 struct context
 {
   struct token *token;
-  char *command; //concatenation of n lines forming a command
+  char *line;
   size_t token_size;
-  size_t cmd_index;
+  size_t line_index;
 };
 
 #endif /* AST_H */
