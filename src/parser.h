@@ -9,6 +9,6 @@
 ** to 0 ; on failure, sets *return_value to the correct error number and
 ** returns NULL.
 */
-struct ast *parse_cmd(/*FILE input, */char *command, int *return_value);
+struct ast *parse_cmd(int *return_value);
 
 #endif /* PARSER_H */

@@ -25,7 +25,7 @@ static void error_handler(int return_value, char **line)
   }
 }
 
-int prompt(FILE *input)
+int prompt(void)
 {
   /*struct aliases_lst *aliases;
   struct functions_lst *functions;
@@ -38,25 +38,31 @@ int prompt(FILE *input)
     if (isatty(0))
       printf("42sh ");
 
-    char *new_line = get_next_line(input, line);
-    if (!new_line) /* end of input */
+    /*char *new_line = get_next_line(input, line);
+    if (!new_line) //end of input
       break;
 
     if (line)
       free(line);
     line = new_line;
 
-    struct ast *ast = parse_cmd(/*input, */line, &return_value);
+    struct ast *ast = parse_cmd(line, &return_value);
     if (!ast)
       error_handler(return_value, &line);
     else
     {
       free(line);
       line = NULL;
-      return_value = ast_exec(ast/*, return_value*/);
-    }
+      return_value = ast_exec(ast);
+    }*/
+
+    struct ast *ast = parse_cmd(&return_value);
+    if (!ast)
+      break;
+    ast_exec(ast);
+    ast_destroy(ast);
   }
-  return 0;
+  return return_value;
 }
 
 int main(void)
@@ -64,7 +70,5 @@ int main(void)
   FILE *input = fdopen(0, "r");
   if (!input)
     return 2;
-  if (prompt(input))
-    return 0;
-  return 1;
+  return prompt();
 }

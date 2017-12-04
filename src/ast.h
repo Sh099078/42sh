@@ -31,8 +31,7 @@ enum node_type
 enum token_type
 {
   WORD,
-  OPERATOR,
-  NAME
+  OPERATOR
 };
 
 struct token
