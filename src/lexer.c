@@ -2,7 +2,7 @@
 
 #include "lexer.h"
 
-static enum token_type update_index(const char *command, size_t *index)
+/*static enum token_type update_index(const char *command, size_t *index)
 {
   if (!command || strlen(command) < *index)
     return NULL;
@@ -12,11 +12,11 @@ static enum token_type update_index(const char *command, size_t *index)
     // token recognition
     continue;
   }
-}
+}*/
 
-struct token get_next_token(const char *command, size_t *index)
+struct token get_next_token(struct context *context, size_t *index);
 {
-  size_t beginning = *index;
+  /*size_t beginning = *index;
   update_index(command, index);
   if (beginning == *index)
     return NULL;
@@ -30,5 +30,8 @@ struct token get_next_token(const char *command, size_t *index)
     token_type,
     token_str
   };
-  return token;
+  return token;*/
+  context = context;
+  index = index;
+  return NULL;
 }

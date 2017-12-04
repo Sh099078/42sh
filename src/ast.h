@@ -53,4 +53,17 @@ void ast_destroy(struct ast *ast);
 struct ast_node *ast_node_create();
 void ast_node_destroy(struct ast_node *ast_node);
 
+/* The struct context is used during the parsing to keep in memory
+** the current token and command so that on lexer or parser failure
+** because of an end of input (without syntax error), the parser
+** is able to ask for more input and continue creating the ast.
+*/
+struct context
+{
+  struct token *token;
+  char *command; //concatenation of n lines forming a command
+  size_t token_size;
+  size_t cmd_index;
+};
+
 #endif /* AST_H */
