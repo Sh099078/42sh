@@ -10,6 +10,7 @@ FILE *ast_children(struct ast *ast, FILE *file)
     fprintf(file, " -> ");
     fprintf(file, "%s", ast->children[i]->value);
     fprintf(file, ";\n");
+    file = ast_children(ast->children[i], file);
   }
   return file;
 }
