@@ -2,21 +2,23 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "ast.h"
 #include "input_handler.h"
 #include "parser.h"
-#include "ast_exec.h"
+//#include "ast_exec.h"
 #include "input_handler.h"
 #include "struct.h"
 
+/*
 static void error_handler(int return_value, char **line)
 {
   switch (return_value)
   {
     case 1:
-      /* lexor error ; ask for more lines and try again */
+      // lexor error ; ask for more lines and try again
       break;
     case 2:
-      /* parser error : syntax error, incorrect var... */
+      // parser error : syntax error, incorrect var...
       free(*line);
       *line = NULL;
       break;
@@ -24,6 +26,7 @@ static void error_handler(int return_value, char **line)
       break;
   }
 }
+*/
 
 int prompt(void)
 {
@@ -31,7 +34,7 @@ int prompt(void)
   struct functions_lst *functions;
   struct variables_lst *variables;
   */
-  char *line = NULL;
+  //char *line = NULL;
   int return_value = 0; //think about the 'echo $?' command.
   while (1)
   {
@@ -59,7 +62,7 @@ int prompt(void)
     struct ast *ast = parse_cmd(&return_value);
     if (!ast)
       break;
-    ast_exec(ast);
+    //ast_exec(ast);
     ast_destroy(ast);
   }
   return return_value;

@@ -45,13 +45,13 @@ struct ast
   char *value;
   enum node_type type;
   size_t nb_children;
+  size_t capacity;
   struct ast **children;
 };
 
-struct ast *ast_create();
+struct ast *ast_init();
 void ast_destroy(struct ast *ast);
-struct ast_node *ast_node_create();
-void ast_node_destroy(struct ast_node *ast_node);
+int ast_add_child(struct ast *parent, struct ast *child);
 
 /* The struct context is used during the parsing to keep in memory
 ** the current token and command so that on lexer or parser failure
