@@ -28,6 +28,8 @@ void ast_destroy(struct ast *ast)
     free(ast->value);
   for (size_t i = 0; i < ast->nb_children; i++)
     ast_destroy(ast->children[i]);
+  if (ast->children)
+    free(ast->children);
   free(ast);
 }
 
