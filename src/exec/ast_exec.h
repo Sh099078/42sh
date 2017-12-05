@@ -1,8 +1,18 @@
 #ifndef AST_EXEC_H
 #define AST_EXEC_H
 
+#include <stddef.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <err.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
 #include "ast.h"
 
-int ast_exec(struct ast *ast/*, int return_value*/);
+char **cmd_get_args(struct ast *ast, size_t start);
+char *cmd_get_path(char *cmd_name);
+int ast_exec(struct ast *ast);
 
 #endif /* AST_EXEC_H */
