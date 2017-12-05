@@ -55,6 +55,8 @@ char *get_type2(int x)
       return "CASE_CLAUSE";
     case 20:
       return "CASE_ITEM";
+    case 21:
+      return "WORD";
   }
 }
 
@@ -66,13 +68,13 @@ FILE *ast_children(struct ast *ast, FILE *file)
   {
     if(ast->type <10)
       type = get_type1(ast->type);
-    else if(ast->type < 21)
+    else if(ast->type < 22)
       type = get_type2(ast->type);
     value = ast->value;
     fprintf(file, "\"%p\" [label=\"%s : %s\"]\n", ast, type, value); 
     if(ast->children[i]->type <10)
       type = get_type1(ast->children[i]->type);
-    else if(ast->type < 21)
+    else if(ast->type < 22)
       type = get_type2(ast->children[i]->type);
     value = ast->children[i]->value;
     fprintf(file, "\"%p\" [label=\"%s : %s\"]\n", ast->children[i], type, value);
@@ -92,7 +94,7 @@ void ast_to_dot(struct ast *ast)
   {
     if(ast->type <10)
       type = get_type1(ast->type);
-    else if(ast->type < 21)
+    else if(ast->type < 22)
       type = get_type2(ast->type);
     value = ast->value;
     fprintf(file, "\"%p\" [label=\"%s : %s\"]\n", ast, type, value); 
