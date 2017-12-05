@@ -1,3 +1,8 @@
+# LEGEND
+To do [ ]
+Doing [~]
+Done  [X]
+
 # PARSER
   ast printer []
   ast create  []
@@ -15,7 +20,15 @@
   '-c' option       []
 
 # OPTIONS
-  GNU long options           []
-  short options              []
-    shopt options            []
-    -c option (with files)   []
+  GNU long options           [X]
+  short options              [X]
+    shopt options            [X]
+    -c option (with files)   [X]
+
+# AST nodes execution
+  AND_OR      [X]
+  RULE_IF     [X]
+  RULE_WHILE  [ ]
+  RULE_UNTIL  [ ]
+  RULE_FOR    [ ]
+  SIMPLE_CMD  [X]
