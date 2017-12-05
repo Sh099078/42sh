@@ -25,4 +25,4 @@ endif (DOXYGEN_FOUND)
 
 add_executable(42sh ${SRC})
 
-include_directories(src)
+#include_directories(src)
