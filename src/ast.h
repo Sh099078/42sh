@@ -25,12 +25,13 @@ enum node_type
   ELSE_CLAUSE,
   DO_GROUP,
   CASE_CLAUSE,
-  CASE_ITEM
+  CASE_ITEM,
+  WORD
 };
 
 enum token_type
 {
-  NEWLINE,
+  NEW_LINE,
   IO_NUMBER,
   TOKEN,
   /* Operators */
