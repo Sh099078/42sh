@@ -1,18 +1,17 @@
 #!/usr/bin/env ruby
 
-require 'inline'
-require 'open3'
 require 'rubygems'
 require 'bundler/setup'
+require 'inline'
+require 'open3'
 
 srcFiles = Dir.glob('../cmains/*.c')
 srcFiles.each do |src|
-  `make \`basename -s .c #{src}\``
   bin = File.basename(src, '*.c')
+  `gcc #{src} -o #{bin}`
   inputFile = File.expand_path('.in', src)
-  42shOut = {}
-  bashOut = {}
-  File.open(inputFile).each do |line|
+  File.readlines(inputFile).each do |line|
+    bashOut = {}
     Open3.popen3(bin) do |stdin , stdout , stderr , t|
       # write program input
       stdin.puts line
@@ -22,6 +21,7 @@ srcFiles.each do |src|
       42shOut[:stderr] = stderr.read
       42shOut[:exitcode] = t.value.exitstatus
     end
+    42shOut = {}
     Open3.popen3('/bin/sh') do |stdin , stdout , stderr , t|
       # write program input
       stdin.puts line
