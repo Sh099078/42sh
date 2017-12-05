@@ -1,6 +1,5 @@
 #include "ast.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "ast_printer.h"
 
 
 char *get_type1(int x)
@@ -16,7 +15,7 @@ char *get_type1(int x)
     case 3:
       return "PIPELINE";
     case 4:
-      return "COMMAND"
+      return "COMMAND";
     case 5:
       return "SIMPLE_COMMAND";
     case 6:
@@ -55,19 +54,29 @@ char *get_type2(int x)
     case 19:
       return "CASE_CLAUSE";
     case 20:
-      return"CASE_ITEM";
+      return "CASE_ITEM";
   }
 }
 
-
 FILE *ast_children(struct ast *ast, FILE *file)
 {
+  char *type;
+  char *value;
   for(int i = 0 ; i < ast->nb_children ; i++)
   {
-    fprintf(file, "%s", ast->value);
-    fprintf(file, " -> ");
-    fprintf(file, "%s", ast->children[i]->value);
-    fprintf(file, ";\n");
+    if(ast->type <10)
+      type = get_type1(ast->type);
+    else if(ast->type < 21)
+      type = get_type2(ast->type);
+    value = ast->value;
+    fprintf(file, "\"%p\" [label=\"%s : %s\"]\n", ast, type, value); 
+    if(ast->children[i]->type <10)
+      type = get_type1(ast->children[i]->type);
+    else if(ast->type < 21)
+      type = get_type2(ast->children[i]->type);
+    value = ast->children[i]->value;
+    fprintf(file, "\"%p\" [label=\"%s : %s\"]\n", ast->children[i], type, value);
+    fprintf(file, "\"%p\" -> \"%p\"\n", ast, ast->children[i]);
     file = ast_children(ast->children[i], file);
   }
   return file;
@@ -77,15 +86,19 @@ void ast_to_dot(struct ast *ast)
 {
   FILE *file = fopen("ast.dot", "w+");
   fprintf(file, "digraph G {\n");
-  file = ast_children(ast, file);
+  char *type;
+  char *value;
+  if(ast && ast->nb_children == 0)
+  {
+    if(ast->type <10)
+      type = get_type1(ast->type);
+    else if(ast->type < 21)
+      type = get_type2(ast->type);
+    value = ast->value;
+    fprintf(file, "\"%p\" [label=\"%s : %s\"]\n", ast, type, value); 
+  }
+  else if(ast)
+    file = ast_children(ast, file);
   fprintf(file, "}");
   fclose(file);
-}
-
-int main()
-{
-  struct ast *ast = malloc(sizeof(struct ast));
-  ast->type = ELEMENT;
-  int x = ast->type;
-  printf("%d", x);
 }
