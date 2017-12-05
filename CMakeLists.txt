@@ -1,4 +1,8 @@
+#cmake_minimum_required(VERSION 3.10)
+
 project(42sh)
+
+set(EXECUTABLE_OUTPUT_PATH ../)
 
 set(
   SRC
@@ -11,7 +15,7 @@ option(BUILD_DOC "Build documentation" ON)
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
   add_custom_target(doc_doxygen ALL
-    COMMAND ${DOXYGEN_EXECUTABLE} Doxyfile
+    COMMAND doxygen ../Doxyfile
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Generating API documentation with Doxygen"
     VERBATIM )
