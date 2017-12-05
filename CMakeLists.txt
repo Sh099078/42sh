@@ -1,7 +1,10 @@
-project(main)
+project(42sh)
 
-file(GLOB_RECURSE OBJS src/*.c)
+add_executable(42sh src/exec/simple_cmd.c)
+include_directories(src)
 
-file(GLOB_RECURSE HEADERS src/*.h)
+#file(GLOB_RECURSE OBJS src/*.c)
 
-add_executable(main ${OBJS} ${HEADERS})
+#file(GLOB_RECURSE HEADERS src/*.h)
+
+#add_executable(main ${OBJS} ${HEADERS})
