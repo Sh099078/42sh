@@ -30,8 +30,20 @@ enum node_type
 
 enum token_type
 {
-  WORD,
-  OPERATOR
+  NEWLINE,
+  IO_NUMBER,
+  TOKEN,
+  /* Operators */
+  AND_IF =    0,    // '&&'
+  OR_IF =     1,    // '||'
+  DSEMI =     2,    // ';;'
+  DLESS =     3,    // '<<'
+  DGREAT =    4,    // '>>'
+  LESSAND =   5,    // '<&'
+  GREATAND =  6,    // '>&'
+  LESSGREAT = 7,    // '<>'
+  DLESSDASH = 8,    // '<<-'
+  CLOBBER =   9     // '>|'
 };
 
 struct token
