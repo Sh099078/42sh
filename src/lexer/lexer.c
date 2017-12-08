@@ -22,41 +22,80 @@ static int ask_new_line(struct context *context)
   context->line = readline(output);
   if (!context->line)
     return 0; //no more input --> exit 42sh
+  while (context->line[context->line_index] == ' ')
+    context->line_index++;
   return 1;
 }
 
-int get_next_token(struct context *context, struct token *token)
+static void token_init(struct context *context)
 {
-  if (!(context->line || ask_new_line(context)))
-    return 1; //error: no more input --> exit 42sh
-
-  if (context->line[context->line_index] == '\n')
-  {
-    context_free_line(context);
-    return 0;
-  }
-  else if (context->line[context->line_index] == '\\' &&
-           context->line[context->line_index + 1] == '\n')
-  {
-    ask_new_line(context);
-    return get_next_token(context, token);
-    /* continue building same token if its first char isnt an IFS */
-  }
-  /* Treat operators */
-  /* Treat IO_NUMBER */
-  /* return TOKEN */
-  return 0;
+  struct token *token = context->token;
+  if (token->token)
+    free(token->token);
+  token->token = NULL;
+  token->type = TOKEN; //default value
+  context->token_size = 0;
 }
 
-/*int main(void)
+static int add_char_to_token(char c, struct context *context)
+{
+  struct token *token = context->token;
+  if (!token->token)
+  {
+    token->token = malloc(sizeof(char));
+    context->token_size++;
+  }
+  else
+    token->token = realloc(token->token, context->token_size++);
+  if (!token->token)
+    return 0; //malloc failed.
+  token->token[context->token_size - 1] = c;
+  return 1;
+}
+
+int get_next_token(struct context *context)
+{
+  struct token *token = context->token;
+  if (!(context->line || ask_new_line(context)))
+    return 0; //no more input --> exit lexer and parser
+  token_init(context);
+  for (; context->line[context->line_index] != ' '; context->line_index++)
+  {
+    if (!(context->line[context->line_index] || ask_new_line(context)))
+      return 0; //end of input
+    switch (context->line[context->line_index])
+    {
+      case '\n':
+        token->type = NEW_LINE;
+        context->line_index++;
+        context_free_line(context);
+        return 1;
+        break;
+      case '\\':
+        if (context->line[++context->line_index] == '\n' && !ask_new_line(context))
+          return 0;
+        break;
+      default:
+        if (!add_char_to_token(context->line[context->line_index], context))
+          return 0; //malloc failed
+        break;
+    }
+  }
+  context->line_index++;
+  return 1;
+}
+
+#include <stdio.h>
+int main(void)
 {
   struct token token;
+  token.token = NULL;
   struct context context = { &token, NULL, 0, 0 };
   for(int i = 0; i < 100; i++)
   {
-    if (!ask_new_line(&context))
+    if (!get_next_token(&context))
       return 0;
-    printf("%s", context.line);
+    printf("%s", token.token);
   }
   return 0;
-}*/
+}

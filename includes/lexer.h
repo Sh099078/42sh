@@ -10,6 +10,6 @@
 ** RETURN VALUE: A struct token containing the copy of the next
 ** token found in the input and its type.
 */
-int get_next_token(struct context *context, struct token *token);
+int get_next_token(struct context *context);
 
 #endif /* LEXER_H */
