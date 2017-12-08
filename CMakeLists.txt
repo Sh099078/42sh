@@ -1,10 +1,10 @@
-#cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.10)
 
 project(42sh)
 
 set(EXECUTABLE_OUTPUT_PATH ../)
 
-set(CMAKE_C_FLAGS "-lreadline")
+set(CMAKE_C_FLAGS "-lreadline -g")
 
 #include_directories(src)
 #include_directories(src/parser)
