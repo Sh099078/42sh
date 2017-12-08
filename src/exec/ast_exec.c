@@ -2,6 +2,7 @@
 
 int ast_exec(struct ast *ast/*, int return_value*/)
 {
+/*
   switch (ast->type)
   {
   case INPUT:
@@ -68,4 +69,6 @@ int ast_exec(struct ast *ast/*, int return_value*/)
     return exec_case_item(ast);
     break;
   }
+*/
+  return 1; //added to make it compile
 }

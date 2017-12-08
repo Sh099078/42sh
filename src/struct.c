@@ -5,13 +5,13 @@
 
 struct shell_env *shell_env_init(void)
 {
-  struct shell_env *env = malloc(sizeof(struct shell_env));
+  struct shell_env *shell_env = malloc(sizeof(struct shell_env));
   if (!shell_env)
     return NULL;
   shell_env->aliases = NULL;
   shell_env->functions = NULL;
   shell_env->variables = NULL;
-  return env;
+  return shell_env;
 }
 
 static struct aliases_lst *find_alias(struct aliases_lst *aliases,
@@ -46,9 +46,9 @@ static struct variables_lst *find_variable(struct variables_lst *variables,
 
 int add_alias(struct shell_env *env, char *pattern, char *alias)
 {
-  if (!(env && name && pattern && strlen(pattern)))
+  if (!(env && alias && pattern && strlen(pattern)))
     return 1; //error
-  struct aliases_lst *alias = find_alias(env->aliases, pattern);
+  struct aliases_lst *aliases_lst = find_alias(env->aliases, pattern);
   if (!aliases_lst)
   {
     /* Add the alias to the shell environment */
