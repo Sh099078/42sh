@@ -42,14 +42,15 @@ static int add_char_to_token(char c, struct context *context)
   struct token *token = context->token;
   if (!token->token)
   {
-    token->token = malloc(sizeof(char));
+    token->token = malloc(sizeof(char) * 2);
     context->token_size++;
   }
   else
-    token->token = realloc(token->token, context->token_size++);
+    token->token = realloc(token->token, (context->token_size++ + 1));
   if (!token->token)
     return 0; //malloc failed.
   token->token[context->token_size - 1] = c;
+  token->token[context->token_size] = 0;
   return 1;
 }
 
@@ -95,7 +96,7 @@ int main(void)
   {
     if (!get_next_token(&context))
       return 0;
-    printf("%s", token.token);
+    printf("%s\n", token.token);
   }
   return 0;
 }
