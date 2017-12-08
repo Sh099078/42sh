@@ -3,10 +3,8 @@
 #include <unistd.h>
 
 #include "ast.h"
-#include "input_handler.h"
 #include "parser.h"
 //#include "ast_exec.h"
-#include "input_handler.h"
 #include "struct.h"
 
 /*
