@@ -10,6 +10,9 @@
 !AUTHORS
 !Doxyfile
 
+# Ignored directories
+build/
+
 # My usual ignored files
 *.txt
 *~
