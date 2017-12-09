@@ -94,7 +94,7 @@ int get_next_token(struct context *context)
       else
         c = context->line[context->line_index++];
     }
-    if (c == ' ')
+    if (c == ' ' && !(simple_quote || double_quote))
       break;
     if (!add_char_to_token(c, context))
       return 1; //malloc failed
