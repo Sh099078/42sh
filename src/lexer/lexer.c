@@ -54,14 +54,12 @@ static int add_char_to_token(char c, struct context *context)
   return 1;
 }
 
-#include <stdio.h>
 static void test_new_line(struct context *context)
 {
   if (!context->token->token)
   {
     token_init(context);
     context->token->type = NEW_LINE;
-    printf("NLINE");
   }
 }
 
@@ -111,7 +109,9 @@ int get_next_token(struct context *context)
         break;
     }
   }
-  return 1;
+  if (context->line[context->line_index] == ' ')
+    context->line_index++;
+  return token->token || token->type == NEW_LINE;
 }
 
 /*
