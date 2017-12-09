@@ -145,7 +145,7 @@ int get_next_token(struct context *context)
   return 1;
 }*/
 
-#include <stdio.h>
+/*#include <stdio.h>
 int main(void)
 {
   struct token token;
@@ -158,4 +158,4 @@ int main(void)
     printf("%s\n", token.token);
   }
   return 0;
-}
+}*/
