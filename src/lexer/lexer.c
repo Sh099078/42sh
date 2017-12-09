@@ -46,7 +46,7 @@ static int add_char_to_token(char c, struct context *context)
     context->token_size++;
   }
   else
-    token->token = realloc(token->token, (context->token_size++ + 1));
+    token->token = realloc(token->token, (++context->token_size + 1));
   if (!token->token)
     return 0; //malloc failed.
   token->token[context->token_size - 1] = c;
@@ -54,7 +54,65 @@ static int add_char_to_token(char c, struct context *context)
   return 1;
 }
 
+#include <stdio.h>
+static void test_new_line(struct context *context)
+{
+  if (!context->token->token)
+  {
+    token_init(context);
+    context->token->type = NEW_LINE;
+    printf("NLINE");
+  }
+}
+
 int get_next_token(struct context *context)
+{
+  struct token *token = context->token;
+  int simple_quote = 0;
+  int double_quote = 0;
+  if (!context->line && !ask_new_line(context))
+      return 0;
+  token_init(context);
+
+  while (1)
+  {
+    int quoting = 0;
+    char c = context->line[context->line_index++];
+    if (c == '\\' && !simple_quote)
+    {
+      quoting = 1;
+      c = context->line[context->line_index++];
+    }
+    if (!c && !quoting)
+      break;
+    if (!c && quoting)
+    {
+      if (!ask_new_line(context))
+        break;
+      else
+        c = context->line[context->line_index++];
+    }
+    if (c == ' ')
+      break;
+    if (!add_char_to_token(c, context))
+      return 1; //malloc failed
+    if (c == '"' && !simple_quote && !quoting)
+    {
+      double_quote = !double_quote;
+      if (!double_quote)
+        break;
+    }
+    if (c == '\'' && !double_quote)
+    {
+      simple_quote = !simple_quote;
+      if (!simple_quote)
+        break;
+    }
+  }
+  return 1;
+}
+
+/*
 {
   struct token *token = context->token;
   if (!(context->line || ask_new_line(context)))
@@ -62,15 +120,14 @@ int get_next_token(struct context *context)
   token_init(context);
   for (; context->line[context->line_index] != ' '; context->line_index++)
   {
-    if (!(context->line[context->line_index] || ask_new_line(context)))
+    if (!(context->line[context->line_index] || token->token || ask_new_line(context)))
       return 0; //end of input
     switch (context->line[context->line_index])
     {
       case '\n':
-        token->type = NEW_LINE;
-        context->line_index++;
+        test_new_line(context);
         context_free_line(context);
-        return 1;
+        return 0;
         break;
       case '\\':
         if (context->line[++context->line_index] == '\n' && !ask_new_line(context))
@@ -84,7 +141,7 @@ int get_next_token(struct context *context)
   }
   context->line_index++;
   return 1;
-}
+}*/
 
 #include <stdio.h>
 int main(void)
