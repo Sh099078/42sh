@@ -70,7 +70,7 @@ int get_next_token(struct context *context)
   struct token *token = context->token;
   int simple_quote = 0;
   int double_quote = 0;
-  if (!context->line && !ask_new_line(context))
+  if ((!context->line || !context->line[context->line_index]) && !ask_new_line(context))
       return 0;
   token_init(context);
 
@@ -81,7 +81,9 @@ int get_next_token(struct context *context)
     if (c == '\\' && !simple_quote)
     {
       quoting = 1;
-      c = context->line[context->line_index++];
+      c = context->line[context->line_index];
+      if (c)
+        context->line_index++;
     }
     if (!c && !quoting)
       break;
