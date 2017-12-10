@@ -1,0 +1,32 @@
+.TH 42SH 1 "2017 December 10" "1.8" "General Commands Manual"
+.SH NAME
+42sh - Simple bash shell
+.SH SYNOPSIS
+42sh [GNU long options] [options] [file]
+.SH DESCRIPTION
+42sh is a bash shell providing a command interpreter written in C. It can
+execute commands read from the standard input or from a file.
+To do so, a whole AST (tree) is built from the input and then the tree is parsed
+ and executed.
+.SH OPTION
+.B [-+]O [shopt_option]
+shopt_option being the shell options accepted in the shopt builtins, if
+shopt_option is specified, -O sets its value and +O unsets it. In the other case
+case, the shopt_option's values will be printed on the standard output.
+.B --norc
+This option makes skipping of the resource
+
+.B --ast-print
+This option creates a .dot file representing the AST given.
+
+.B --ver, --version
+This option prints the current 42sh version on the standard output.
+.SH AUTHORS
+Loup Federico
+<loup.federico@epita.fr>
+
+Rodolphe Guillaume
+<rodolphe.guillaume@epita.fr>
+
+Hamza Mebarek
+<hamza.mebarek@epita.fr>
