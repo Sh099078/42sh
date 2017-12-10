@@ -18,12 +18,13 @@ static void context_free_line(struct context *context)
 static int ask_new_line(struct context *context)
 {
   context_free_line(context);
-  char *output = isatty(0) ? "> " : "\n";
+  char *output = isatty(0) ? (context->first_line ? "42sh$ " : "> ") : "\n";
   context->line = readline(output);
   if (!context->line)
     return 0; //no more input --> exit 42sh
   while (context->line[context->line_index] == ' ')
     context->line_index++;
+  context->first_line = 0;
   return 1;
 }
 
@@ -87,7 +88,10 @@ int get_next_token(struct context *context)
         context->line_index++;
     }
     if (!c && !quoting)
+    {
+      context->first_line = 1;
       break;
+    }
     if (!c && quoting)
     {
       if (!ask_new_line(context))
@@ -122,7 +126,7 @@ int main(void)
 {
   struct token token;
   token.token = NULL;
-  struct context context = { &token, NULL, 0, 0 };
+  struct context context = { &token, NULL, 0, 0, 1 };
   for(int i = 0; i < 100; i++)
   {
     if (!get_next_token(&context))

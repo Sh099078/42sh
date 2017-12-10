@@ -94,6 +94,7 @@ struct context
   char *line;
   size_t token_size;
   size_t line_index;
+  int first_line;
 };
 
 #endif /* AST_H */
