@@ -54,6 +54,7 @@ static int add_char_to_token(char c, struct context *context)
   return 1;
 }
 
+/*
 static void test_new_line(struct context *context)
 {
   if (!context->token->token)
@@ -62,6 +63,7 @@ static void test_new_line(struct context *context)
     context->token->type = NEW_LINE;
   }
 }
+*/
 
 int get_next_token(struct context *context)
 {
