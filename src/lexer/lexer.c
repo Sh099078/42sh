@@ -18,7 +18,7 @@ static void context_free_line(struct context *context)
 static int ask_new_line(struct context *context)
 {
   context_free_line(context);
-  char *output = isatty(0) ? "\n> " : "";
+  char *output = isatty(0) ? "> " : "\n";
   context->line = readline(output);
   if (!context->line)
     return 0; //no more input --> exit 42sh
@@ -77,7 +77,8 @@ int get_next_token(struct context *context)
   while (1)
   {
     int quoting = 0;
-    char c = context->line[context->line_index++];
+    char c = context->line[context->line_index];
+    context->line_index = c ? context->line_index + 1 : context->line_index;
     if (c == '\\' && !simple_quote)
     {
       quoting = 1;
@@ -116,38 +117,7 @@ int get_next_token(struct context *context)
   return token->token || token->type == NEW_LINE;
 }
 
-/*
-{
-  struct token *token = context->token;
-  if (!(context->line || ask_new_line(context)))
-    return 0; //no more input --> exit lexer and parser
-  token_init(context);
-  for (; context->line[context->line_index] != ' '; context->line_index++)
-  {
-    if (!(context->line[context->line_index] || token->token || ask_new_line(context)))
-      return 0; //end of input
-    switch (context->line[context->line_index])
-    {
-      case '\n':
-        test_new_line(context);
-        context_free_line(context);
-        return 0;
-        break;
-      case '\\':
-        if (context->line[++context->line_index] == '\n' && !ask_new_line(context))
-          return 0;
-        break;
-      default:
-        if (!add_char_to_token(context->line[context->line_index], context))
-          return 0; //malloc failed
-        break;
-    }
-  }
-  context->line_index++;
-  return 1;
-}*/
-/*
-#include <stdio.h>
+/*#include <stdio.h>
 int main(void)
 {
   struct token token;
