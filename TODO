@@ -31,4 +31,8 @@ Done  [X]
   RULE_WHILE  [ ]
   RULE_UNTIL  [ ]
   RULE_FOR    [ ]
-  SIMPLE_CMD  [X]
+  SIMPLE_CMD  [~]
+    ENV variables support [ ]
+
+# 42sh execution
+  Storing env variables [ ]
