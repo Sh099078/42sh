@@ -101,13 +101,13 @@ int get_next_token(struct context *context)
     if (c == '"' && !simple_quote && !quoting)
     {
       double_quote = !double_quote;
-      if (!double_quote)
+      if (!double_quote && context->line[context->line_index] == ' ')
         break;
     }
     if (c == '\'' && !double_quote)
     {
       simple_quote = !simple_quote;
-      if (!simple_quote)
+      if (!simple_quote && context->line[context->line_index] == ' ')
         break;
     }
   }
@@ -146,8 +146,8 @@ int get_next_token(struct context *context)
   context->line_index++;
   return 1;
 }*/
-
-/*#include <stdio.h>
+/*
+#include <stdio.h>
 int main(void)
 {
   struct token token;
