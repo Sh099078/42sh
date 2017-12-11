@@ -1,32 +1,34 @@
 #ifndef STRUCT_H
 #define STRUCT_H
 
+#include <string.h>
+
 struct shell_env
 {
-  struct aliases_lst *aliases;
-  struct functions_lst *functions;
-  struct variables_lst *variables;
+  struct functions_list *functions;
+  struct aliases_list* aliases;
+  struct variables_list *variables;
 };
 
-struct aliases_lst
+struct aliases_list
 {
   char *pattern; //pattern to be identified as an alias.
   char *alias; //string to substitute to the pattern.
-  struct aliases_lst *next;
+  struct aliases_list *next;
 };
 
-struct functions_lst
+struct functions_list
 {
   char *name;
   struct ast *ast;
-  struct functions_lst *next;
+  struct functions_list *next;
 };
 
-struct variables_lst
+struct variables_list
 {
-  char *name;
-  char *value;
-  struct variables_lst *next;
+  char **list;
+  size_t capacity;
+  size_t size;
 };
 
 struct shell_env *shell_env_init(void);
