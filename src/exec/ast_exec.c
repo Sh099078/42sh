@@ -2,6 +2,8 @@
 
 int ast_exec(struct ast *ast/*, int return_value*/)
 {
+  ast = ast;
+  return 1; //added to make it compile
 /*
   switch (ast->type)
   {
@@ -70,5 +72,4 @@ int ast_exec(struct ast *ast/*, int return_value*/)
     break;
   }
 */
-  return 1; //added to make it compile
 }
