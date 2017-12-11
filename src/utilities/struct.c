@@ -70,8 +70,12 @@ static int *find_variable(struct variables_lst *variables,
     return -1;
   for (size_t i = 0; i < variables->size; i++)
   {
-    if (strcmp(variable_get_key(variables->list[i]), name) == 0)
+    char *key = variable_get_key(variables->list[i]);
+    if (!key)
+      return -1;
+    if (strcmp(key, name) == 0)
       return i;
+    free(key);
   }
   return -1;
 }
