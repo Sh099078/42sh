@@ -89,13 +89,13 @@ static void token_update_type(struct token *token)
           token->token[j] == '>')); j++)
       if (token->token[j] == '<' || token->token[j] == '>')
         token->type = IO_NUMBER;
+    return;
   }
   token->type = TOKEN;
 }
 
 int get_next_token(struct context *context)
 {
-  //struct token *token = context->token;
   int simple_quote = 0;
   int double_quote = 0;
   token_init(context);
@@ -150,7 +150,7 @@ int get_next_token(struct context *context)
   //return token->token || token->type == NEW_LINE;
 }
 
-/*#include <stdio.h>
+#include <stdio.h>
 static void print_token_type(struct token token)
 {
   if (token.type == TOKEN)
@@ -164,7 +164,7 @@ static void print_token_type(struct token token)
     char *reserved_words[] =
     {
       "If", "Then", "Else", "Elif", "Fi", "Do", "Done", "Case", "Esac", "While",
-      "Until", "For", "Lbrace", "Rbrace", "Bang", "In", "AND_IF", "OR_IF", 
+      "Until", "For", "Lbrace", "Rbrace", "Bang", "In", "AND_IF", "OR_IF",
       "DSEMI", "DLESS", "DGREAT", "LESSAND",
       "GREATAND", "LESSGREAT", "DLESSDASH", "CLOBBER", NULL
     };
@@ -194,4 +194,4 @@ int main(void)
     printf("\n");
   }
   return 0;
-}*/
+}
