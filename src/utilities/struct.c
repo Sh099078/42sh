@@ -61,18 +61,19 @@ static char *variable_get_key(char *keyvalue)
  * Find variable index in variable list of shell environment
  * @param  variables variables list
  * @param  name      key of variable we are looking for
- * @return           index of the desired variable, or -1 if not found
+ * @return           index of the desired variable, -1 if not found
+ * or -2 on error
  */
 static int *find_variable(struct variables_lst *variables,
     char *name)
 {
   if (!variables)
-    return -1;
+    return -2;
   for (size_t i = 0; i < variables->size; i++)
   {
     char *key = variable_get_key(variables->list[i]);
     if (!key)
-      return -1;
+      return -2;
     if (strcmp(key, name) == 0)
       return i;
     free(key);
@@ -114,27 +115,33 @@ int add_function(struct shell_env *env, char *name, struct ast *ast)
   return 0;
 }
 
+// TODO NOW
+static int env_var_list_push_back(env, keyvalue);
+static int env_var_list_update_var(env, keyvalue);
+
 /**
  * add variable to the variable list of shell environment
  * @param  env   shell environment
  * @param  name  key of the variable
  * @param  value value of the variable
- * @return       index of the inserted variable, or -1 on error
+ * @return       1 if variable has been inserted, -1 otherwise
  */
 int add_variable(struct shell_env *env, char *name, char *value)
 {
-  if (!(env && name && strlen(name)))
-    return 1; //error
-  struct variables_lst *variable = find_variable(env->variables, name);
-  if (!variable)
-  {
-    // Add the variable to the shell environment
-  }
-  else
-  {
-    // Update the variable in the shell environment
-  }
-  return 0;
+  if (!env || !name || !strlen(name))
+    return -1; // error
+  int var_idx = find_variable(env->variables, name);
+  if (var_idx == -2) // real error, not just not found
+    return -1;
+  char *keyvalue = malloc(strlen(name) + 1 + strlen(value));
+  if (!keyvalue)
+    return -1;
+  strcpy(keyvalue, name);
+  strcat(name, "=");
+  strcat(name, value);
+  if (var_idx < 0)
+    return env_var_list_push_back(env, keyvalue);
+  return env_var_list_update_var(env, keyvalue);
 }
 
 // TODO
