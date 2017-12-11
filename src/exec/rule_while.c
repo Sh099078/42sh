@@ -10,7 +10,7 @@
  */
 int rule_while(struct ast *ast)
 {
-  int int cmpdlist2 = 0;
+  int cmpdlist2 = 0;
   while (ast_exec(ast->children[0]) == 0)
     cmpdlist2 = ast_exec(ast->children[1]);
   return cmpdlist2;

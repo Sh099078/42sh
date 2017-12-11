@@ -2,7 +2,7 @@
 #include <string.h>
 
 #include "struct.h"
-
+/*
 struct shell_env *shell_env_init(void)
 {
   struct shell_env *shell_env = malloc(sizeof(struct shell_env));
@@ -51,11 +51,11 @@ int add_alias(struct shell_env *env, char *pattern, char *alias)
   struct aliases_lst *aliases_lst = find_alias(env->aliases, pattern);
   if (!aliases_lst)
   {
-    /* Add the alias to the shell environment */
+    // Add the alias to the shell environment
   }
   else
   {
-    /* Update the alias in the shell environment */
+    // Update the alias in the shell environment 
   }
   return 0;
 }
@@ -67,11 +67,11 @@ int add_function(struct shell_env *env, char *name, struct ast *ast)
   struct functions_lst *function = find_function(env->functions, name);
   if (!function)
   {
-    /* Add the function to the shell environment */
+    // Add the function to the shell environment 
   }
   else
   {
-    /* Update the function in the shell environment */
+    // Update the function in the shell environment 
   }
   return 0;
 }
@@ -82,11 +82,11 @@ int add_variable(struct shell_env *env, char *name, char *value)
   struct variables_lst *variable = find_variable(env->variables, name);
   if (!variable)
   {
-    /* Add the variable to the shell environment */
+    // Add the variable to the shell environment 
   }
   else
   {
-    /* Update the variable in the shell environment */
+    // Update the variable in the shell environment 
   }
   return 0;
 }
@@ -94,3 +94,5 @@ int add_variable(struct shell_env *env, char *name, char *value)
 int remove_alias(struct shell_env *env, char *pattern);
 int remove_function(struct shell_env *env, char *name);
 int remove_variable(struct shell_env *env, char *name);
+
+*/

@@ -41,7 +41,7 @@ int exec_simple_command(struct ast *ast)
   }
   else if (pid < 0)
   {
-    warn("%s execution failed: could not fork:");
+    warn("%s execution failed: could not fork:", ast->value);
     return 1; // TODO check SCL exit code
   }
   int status = -1;

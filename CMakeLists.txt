@@ -4,7 +4,8 @@ project(42sh)
 
 set(EXECUTABLE_OUTPUT_PATH ../)
 
-set(CMAKE_C_FLAGS "-std=c99 -pedantic -Wall -Wextra -Werror -lreadline -g")
+set(CMAKE_C_FLAGS "-std=c99 -pedantic -Wall -Wextra -Werror -lreadline -g \
+-D_POSIX_C_SOURCE=200809L")
 
 #include_directories(src)
 #include_directories(src/parser)
