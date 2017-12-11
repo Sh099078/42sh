@@ -114,13 +114,14 @@ int get_next_token(struct context *context)
       if (c)
         context->line_index++;
     }
-    if (!c && !quoting)
+    if (!c)
     {
-      context->first_line = 1;
-      break;
-    }
-    if (!c && quoting)
-    {
+      if (!(quoting || simple_quote || double_quote))
+      {
+        context->first_line = 1;
+        break;
+      }
+      quoting = 0;
       if (!ask_new_line(context))
         break;
       quoting = 0;
@@ -131,18 +132,31 @@ int get_next_token(struct context *context)
       break;
     if (!add_char_to_token(c, context))
       return 1; //malloc failed
+    quoting = c != '"' && c != '\'' ? 0 : quoting;
     if (c == '"' && !simple_quote && !quoting)
     {
       double_quote = !double_quote;
-      if (!double_quote && context->line[context->line_index] == ' ')
+      if (!double_quote && (context->line[context->line_index] == ' ' ||
+          context->line[context->line_index] == '\0'))
         break;
+      if (context->line[context->line_index] == '\0')
+        double_quote = 1;
     }
-    if (c == '\'' && !double_quote)
+    else if (c == '\'' && !double_quote && !quoting)
     {
       simple_quote = !simple_quote;
-      if (!simple_quote && context->line[context->line_index] == ' ')
+      if (!simple_quote && (context->line[context->line_index] == ' ' ||
+            context->line[context->line_index] == '\0'))
+      {
+        //if (simple_quote && !add_char_to_token('\n', context))
+          //return 1;
         break;
+      }
+      if (context->line[context->line_index] == '\0')
+        simple_quote = 1;
     }
+    else if (quoting)
+      quoting = 0;
   }
   if (context->line[context->line_index] == ' ')
     context->line_index++;
