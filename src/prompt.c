@@ -66,10 +66,10 @@ int prompt(void)
   return return_value;
 }
 
-int main(void)
+/*int main(void)
 {
   FILE *input = fdopen(0, "r");
   if (!input)
     return 2;
   return prompt();
-}
+}*/
