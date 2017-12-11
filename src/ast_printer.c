@@ -1,5 +1,5 @@
 #include "../includes/ast.h"
-#include "ast_printer.h"
+#include "../includes/ast_printer.h"
 
 
 char *get_type1(int x)
