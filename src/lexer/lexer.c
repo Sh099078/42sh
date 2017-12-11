@@ -98,16 +98,16 @@ int get_next_token(struct context *context)
 {
   int simple_quote = 0;
   int double_quote = 0;
+  int quoting = 0;
   token_init(context);
   if ((!context->line || !context->line[context->line_index]) && !ask_new_line(context))
       return 0;
 
   while (1)
   {
-    int quoting = 0;
     char c = context->line[context->line_index];
     context->line_index = c ? context->line_index + 1 : context->line_index;
-    if (c == '\\' && !simple_quote)
+    if (c == '\\' && !simple_quote && !quoting)
     {
       quoting = 1;
       c = context->line[context->line_index];
@@ -123,8 +123,9 @@ int get_next_token(struct context *context)
     {
       if (!ask_new_line(context))
         break;
-      else
-        c = context->line[context->line_index++];
+      quoting = 0;
+      continue;
+      c = context->line[context->line_index++];
     }
     if (c == ' ' && !(simple_quote || double_quote))
       break;
