@@ -36,6 +36,7 @@ static void token_init(struct context *context)
   token->token = NULL;
   token->type = TOKEN; //default value
   context->token_size = 0;
+  context->token_used = 1;
 }
 
 static int add_char_to_token(char c, struct context *context)
@@ -96,6 +97,8 @@ static void token_update_type(struct token *token)
 
 int get_next_token(struct context *context)
 {
+  if (!context->token_used) //the previous parsing function hasn't used it.
+    return 1;
   int simple_quote = 0;
   int double_quote = 0;
   int quoting = 0;
