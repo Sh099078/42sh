@@ -47,7 +47,7 @@ int prompt(void)
       free(line);
     line = new_line;
 
-    struct ast *ast = parse_cmd(line, &return_value);
+    struct ast *ast = ast_create(line, &return_value);
     if (!ast)
       error_handler(return_value, &line);
     else
@@ -57,7 +57,7 @@ int prompt(void)
       return_value = ast_exec(ast);
     }*/
 
-    struct ast *ast = parse_cmd(&return_value);
+    struct ast *ast = ast_create(&return_value);
     if (!ast)
       break;
     //ast_exec(ast);
@@ -66,10 +66,10 @@ int prompt(void)
   return return_value;
 }
 
-/*int main(void)
+int main(void)
 {
   FILE *input = fdopen(0, "r");
   if (!input)
     return 2;
   return prompt();
-}*/
+}

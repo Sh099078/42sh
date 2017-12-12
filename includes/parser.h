@@ -9,7 +9,7 @@
 ** to 0 ; on failure, sets *return_value to the correct error number and
 ** returns NULL.
 */
-struct ast *parse_cmd(int *return_value);
+struct ast *ast_create(int *return_value);
 
 struct ast *parse_input(int *return_value, struct context *context);
 
