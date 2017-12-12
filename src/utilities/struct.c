@@ -115,8 +115,23 @@ int add_function(struct shell_env *env, char *name, struct ast *ast)
   return 0;
 }
 
-// TODO NOW
-static int env_var_list_push_back(env, keyvalue);
+static int env_var_list_push_back(struct shell_env *env, char *keyvalue)
+{
+  if (!env || !env->variables)
+    return -1;
+  struct variables_list *vars = env->variables;
+  if (vars->size == vars->capacity)
+  {
+    char *tmp = realloc(vars->list, vars->capacity * 2);
+    if (!tmp)
+      return -1;
+    vars->list = tmp;
+    vars->capacity *= 2;
+  }
+  vars->list[vars->size++] = keyvalue;
+  return 0;
+}
+
 static int env_var_list_update_var(env, keyvalue);
 
 /**
