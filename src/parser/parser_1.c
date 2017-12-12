@@ -39,7 +39,18 @@ struct ast *parse_list(int *return_value, struct context *context)
   }
   return list;
 }
-struct ast *parse_and_or(int *return_value, struct context *context);
+struct ast *parse_and_or(int *return_value, struct context *context)
+{
+  struct ast *and_or = ast_init();
+  struct ast *pipeline = parse_pipeline(return_value, context);
+  if (!(and_or && pipeline))
+    return NULL;
+  and_or->type = AND_OR;
+  if (!get_next_token(context))
+    return NULL; //error
+  return and_or;
+}
+
 struct ast *parse_pipeline(int *return_value, struct context *context);
 struct ast *parse_command(int *return_value, struct context *context);
 struct ast *parse_simple_command(int *return_value, struct context *context);
