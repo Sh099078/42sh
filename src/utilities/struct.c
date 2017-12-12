@@ -132,7 +132,14 @@ static int env_var_list_push_back(struct shell_env *env, char *keyvalue)
   return 0;
 }
 
-static int env_var_list_update_var(env, keyvalue);
+static int env_var_list_update_var(struct shell_env *env, int index,
+                                   char *keyvalue)
+{
+  if (!env || !env->variables)
+    return -1;
+  free(vars->list[index]);
+  vars->list[index] = keyvalue;
+}
 
 /**
  * add variable to the variable list of shell environment
@@ -156,7 +163,7 @@ int add_variable(struct shell_env *env, char *name, char *value)
   strcat(name, value);
   if (var_idx < 0)
     return env_var_list_push_back(env, keyvalue);
-  return env_var_list_update_var(env, keyvalue);
+  return env_var_list_update_var(env, var_idx, keyvalue);
 }
 
 // TODO
