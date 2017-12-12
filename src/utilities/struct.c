@@ -2,6 +2,21 @@
 #include <string.h>
 
 #include "struct.h"
+static struct variables_list *variables_init(void)
+{
+  struct variables_list *vars = malloc(sizeof(struct variables_list));
+  if (!vars)
+    return NULL;
+  vars->capacity = 10;
+  vars->size = 0;
+  vars->list = malloc(sizeof(char *)) * vars->capacity);
+  if (!vars->list)
+  {
+    free(vars);
+    return NULL;
+  }
+  return vars;
+}
 
 struct shell_env *shell_env_init(void)
 {
@@ -10,7 +25,12 @@ struct shell_env *shell_env_init(void)
     return NULL;
   shell_env->aliases = NULL;
   shell_env->functions = NULL;
-  shell_env->variables = NULL;
+  shell_env->variables = variables_init();
+  if (!shell_env->variables)
+  {
+    free(shell_env);
+    return NULL;
+  }
   return shell_env;
 }
 
