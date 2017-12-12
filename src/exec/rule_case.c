@@ -1,14 +1,5 @@
 #include "ast_exec.h"
 
-int rule_case(struct ast *ast)
-{
-  char *var = ast->children[0]->value;
-  for(int i = 1 ; ast->children[i] ; i++)
-  {
-
-  }
-}
-
 int case_clause(struct ast *ast, char *var)
 {
   int i = 0;
