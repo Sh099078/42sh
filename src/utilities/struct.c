@@ -18,6 +18,14 @@ static struct variables_list *variables_init(void)
   return vars;
 }
 
+static void variables_destroy(struct variables_list *vars)
+{
+  if (!vars)
+    return NULL;
+  free(vars->list);
+  free(vars);
+}
+
 struct shell_env *shell_env_init(void)
 {
   struct shell_env *shell_env = malloc(sizeof(struct shell_env));
@@ -34,6 +42,13 @@ struct shell_env *shell_env_init(void)
   return shell_env;
 }
 
+void shell_env *shell_env_init(struct shell_env *env)
+{
+  if (!env)
+    return;
+  variables_destroy(env->variables);
+  free(env);
+}
 // TODO
 static struct aliases_lst *find_alias(struct aliases_lst *aliases,
     char *pattern)
