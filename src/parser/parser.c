@@ -17,14 +17,26 @@ struct ast *ast_create(int *return_value)
 
 struct ast *parse_input(int *return_value, struct context *context)
 {
-  struct ast *ast = parse_list(return_value, context);
-  if (!get_next_token(context) || context->token->type == NEW_LINE)
+  struct ast *input = ast_init();
+  *return_value = 0;
+  if (!input)
   {
-    *return_value = 0; //no error
-    return ast;
+    return_value = 1; //error
+    return input;
   }
-  *return_value = 1; // Error while parsing
-  ast_destroy(ast);
+  input->type = INPUT;
+  if (!get_next_token(context) || context->token->type == NEW_LINE)
+    return input;
+  context->token_used = 0;
+  struct ast *list = parse_list(return_value, context);
+  if (list)
+  {
+    ast_add_child(input, list, NULL);
+    if (!get_next_token(context) || context->token->type == NEW_LINE)
+      return input;
+  }
+  *return_value = 1; //error
+  ast_destroy(input);
   return NULL;
 }
 
