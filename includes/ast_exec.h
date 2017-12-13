@@ -11,6 +11,7 @@
 
 #include "ast.h"
 #include "struct.h"
+#include "string.h"
 
 char **cmd_get_args(struct ast *ast, size_t start);
 char *cmd_get_path(char *cmd_name);
