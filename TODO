@@ -28,11 +28,13 @@ Done  [X]
 # AST nodes execution
   AND_OR      [X]
   RULE_IF     [X]
-  RULE_WHILE  [ ]
-  RULE_UNTIL  [ ]
-  RULE_FOR    [ ]
+  RULE_WHILE  [X]
+  RULE_UNTIL  [X]
+  RULE_FOR    [~]
+    get_seq   [ ]
   SIMPLE_CMD  [~]
     ENV variables support [ ]
 
 # 42sh execution
-  Storing env variables [ ]
+  Storing env variables [X]
+    temp variables (export, and command only variables) [ ]
