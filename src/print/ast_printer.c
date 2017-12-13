@@ -75,13 +75,13 @@ FILE *ast_children(struct ast *ast, FILE *file)
       type = get_type1(ast->type);
     else if(ast->type < 22)
       type = get_type2(ast->type);
-    value = ast->value;
+    value = ast->values[0];
     fprintf(file, "\"%p\" [label=\"%s : %s\"]\n", tmp_ast, type, value);
     if(ast->children[i]->type <10)
       type = get_type1(ast->children[i]->type);
     else if(ast->type < 22)
       type = get_type2(ast->children[i]->type);
-    value = ast->children[i]->value;
+    value = ast->children[i]->values[0];
     fprintf(file, "\"%p\" [label=\"%s : %s\"]\n", tmp_chili, type, value);
     fprintf(file, "\"%p\" -> \"%p\"\n", tmp_ast, tmp_chili);
     file = ast_children(ast->children[i], file);
@@ -102,7 +102,7 @@ void ast_to_dot(struct ast *ast)
       type = get_type1(ast->type);
     else if(ast->type < 22)
       type = get_type2(ast->type);
-    value = ast->value;
+    value = ast->values[0];
     fprintf(file, "\"%p\" [label=\"%s : %s\"]\n", tmp_ast, type, value);
   }
   else if(ast)

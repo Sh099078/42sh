@@ -6,9 +6,9 @@ char **cmd_get_args(struct ast *ast, size_t start)
   char **argv = malloc(sizeof(char*) * (ast->nb_children - start + 1));
   if (!argv)
     return NULL;
-  argv[0] = ast->value;
+  argv[0] = ast->values[0];
   for (size_t i = 0; i < ast->nb_children; i++)
-    argv[i + 1] = ast->children[i + start]->value;
+    argv[i + 1] = ast->children[i + start]->values[0];
   return argv;
 }
 
@@ -28,7 +28,7 @@ int exec_simple_command(struct ast *ast)
   char **argv = cmd_get_args(ast, cmd_idx);
   if (!argv)
     return 1; // TODO ERROR EXIT CODE
-  char *path = cmd_get_path(ast->value);
+  char *path = cmd_get_path(ast->values[0]);
   if (!path)
   {
     free(argv);
@@ -41,7 +41,7 @@ int exec_simple_command(struct ast *ast)
   }
   else if (pid < 0)
   {
-    warn("%s execution failed: could not fork:", ast->value);
+    warn("%s execution failed: could not fork:", ast->values[0]);
     return 1; // TODO check SCL exit code
   }
   int status = -1;

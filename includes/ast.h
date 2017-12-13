@@ -81,7 +81,7 @@ struct ast
 
 struct ast *ast_init();
 void ast_destroy(struct ast *ast);
-int ast_add_child(struct ast *parent, struct ast *child);
+int ast_add_child(struct ast *parent, struct ast *child, char *value);
 
 /* The struct context is used during the parsing to keep in memory
 ** the current token and command so that on lexer or parser failure

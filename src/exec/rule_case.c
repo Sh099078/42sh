@@ -6,7 +6,7 @@ int case_clause(struct ast *ast, char *var)
   int ok = 0;
   while(ast->children[i]->type == 21 && ok == 0)
   {
-    if(strcmp(ast->children[i]->value, var) == 0)
+    if(strcmp(ast->children[i]->values[0], var) == 0)
       ok++;
     i++;
   }
@@ -18,7 +18,7 @@ int case_clause(struct ast *ast, char *var)
 
 int rule_case(struct ast *ast)
 {
-  char *var = ast->children[0]->value;
+  char *var = ast->children[0]->values[0];
   for(int i = 1 ; ast->children[i] ; i++)
   {
     if(case_clause(ast->children[i], var) != -1)
