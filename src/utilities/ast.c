@@ -33,7 +33,7 @@ void ast_destroy(struct ast *ast)
   free(ast);
 }
 
-int ast_add_child(struct ast *ast, struct ast *new_child)
+int ast_add_child(struct ast *ast, struct ast *new_child, char *value)
 {
   if (!(ast && new_child))
     return 0;
@@ -41,11 +41,22 @@ int ast_add_child(struct ast *ast, struct ast *new_child)
   {
     struct ast **new_children = realloc(ast->children,
         sizeof(struct ast*) * ast->capacity * 2);
-    if (!new_children)
+    struct char **new_values = realloc(ast_values,
+        sizeof(char *) * ast->capacity * 2);
+    if (!(new_children && new_values))
+    {
+      if (new_values)
+        free(new_values);
+      if (new_children)
+        free(new_children);
       return 0;
+    }
     ast->children = new_children;
+    ast->values = new_values;
     ast->capacity *= 2;
   }
   ast->children[ast->nb_children] = new_child;
+  ast->values[ast->nb_children++] = value;
+
   return 1;
 }

@@ -72,7 +72,7 @@ struct token
 
 struct ast
 {
-  char *value;
+  char **values;
   enum node_type type;
   size_t nb_children;
   size_t capacity;
