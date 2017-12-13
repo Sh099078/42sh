@@ -9,12 +9,15 @@ struct ast *ast_init()
     return NULL;
   ast->capacity = 2;
   ast->children = malloc(sizeof(struct ast *) * ast->capacity);
-  if (!ast->children)
+  char **values = malloc(sizeof(char *) * ast->capacity);
+  if (!(ast->children && ast->values))
   {
-    free(ast);
+    if (ast)
+      free(ast);
+    if (values)
+      free(values);
     return NULL;
   }
-//  ast->value = NULL;
   ast->type = 0;
   ast->nb_children = 0;
   return ast;
@@ -24,12 +27,15 @@ void ast_destroy(struct ast *ast)
 {
   if (!ast)
     return;
-//  if (ast->value)
-//    free(ast->value);
   for (size_t i = 0; i < ast->nb_children; i++)
+  {
+    free(ast->values[i]);
     ast_destroy(ast->children[i]);
+  }
   if (ast->children)
     free(ast->children);
+  if (ast->values)
+    free(ast->values);
   free(ast);
 }
 
