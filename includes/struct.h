@@ -33,7 +33,7 @@ struct variables_list
 };
 
 struct shell_env *shell_env_init(void);
-void shell_env *shell_env_init(struct shell_env *env);
+void shell_env_destroy(struct shell_env *env);
 int add_alias(struct shell_env *env, char *pattern, char *alias);
 int add_function(struct shell_env *env, char *name, struct ast *ast);
 int add_variable(struct shell_env *env, char *name, char *value);

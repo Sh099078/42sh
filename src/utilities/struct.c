@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "struct.h"
+/*****
 static struct variables_list *variables_init(void)
 {
   struct variables_list *vars = malloc(sizeof(struct variables_list));
@@ -70,13 +71,11 @@ static struct functions_lst *find_function(struct functions_lst *functions,
     functions = functions->next;
   return functions;
 }
-/**
  * Variables are stored as "key=value" strings, returns null terminated key
  * string
  *
  * @param  keyvalue "key=value" string
  * @return          null terminated key string representation, or NULL on error
- */
 static char *variable_get_key(char *keyvalue)
 {
   char *s = malloc(strlen(keyvalue));
@@ -92,13 +91,11 @@ static char *variable_get_key(char *keyvalue)
   return s;
 }
 
-/**
  * Find variable index in variable list of shell environment
  * @param  variables variables list
  * @param  name      key of variable we are looking for
  * @return           index of the desired variable, -1 if not found
  * or -2 on error
- */
 static int *find_variable(struct variables_lst *variables,
     char *name)
 {
@@ -176,13 +173,11 @@ static int env_var_list_update_var(struct shell_env *env, int index,
   vars->list[index] = keyvalue;
 }
 
-/**
  * add variable to the variable list of shell environment
  * @param  env   shell environment
  * @param  name  key of the variable
  * @param  value value of the variable
  * @return       1 if variable has been inserted, -1 otherwise
- */
 int add_variable(struct shell_env *env, char *name, char *value)
 {
   if (!env || !name || !strlen(name))
@@ -206,3 +201,4 @@ int remove_alias(struct shell_env *env, char *pattern);
 // TODO
 int remove_function(struct shell_env *env, char *name);
 int remove_variable(struct shell_env *env, char *name);
+*/
