@@ -19,3 +19,10 @@ struct ast *create_simple_cmd_ast(int argc, char **argv)
   }
   return ast;
 }
+
+struct ast *create_and_or_ast(int argc, char **argv)
+{
+  argc = argc;
+  argv = argv;
+  return NULL;
+}
