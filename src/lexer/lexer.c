@@ -124,6 +124,8 @@ int get_next_token(struct context *context)
         context->first_line = 1;
         break;
       }
+      //if (quoting && !add_char_to_token('\n', context))
+        //return 1; //malloc failed
       quoting = 0;
       if (!ask_new_line(context))
         break;
@@ -168,7 +170,6 @@ int get_next_token(struct context *context)
   //return token->token || token->type == NEW_LINE;
 }
 
-/*
 #include <stdio.h>
 static void print_token_type(struct token token)
 {
@@ -203,7 +204,7 @@ int main(void)
 {
   struct token token;
   token.token = NULL;
-  struct context context = { &token, NULL, 0, 0, 1 };
+  struct context context = { &token, NULL, 0, 0, 1, 1 };
   for(int i = 0; i < 100; i++)
   {
     if (!get_next_token(&context))
@@ -214,4 +215,3 @@ int main(void)
   }
   return 0;
 }
-*/
