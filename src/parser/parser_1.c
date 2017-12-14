@@ -17,8 +17,7 @@ struct ast *parse_list(int *return_value, struct context *context)
   for (; and_or; and_or = parse_and_or(return_value, context))
   {
     get_next_token(context);
-    if (and_or)
-      ast_add_child(list, and_or, context->token->token);
+    ast_add_child(list, and_or, context->token->token);
     char *token = context->token->token;
     if (strcmp(token, ";") && strcmp(token, "&"))
     {
@@ -36,11 +35,45 @@ struct ast *parse_list(int *return_value, struct context *context)
 }
 struct ast *parse_and_or(int *return_value, struct context *context)
 {
+  struct ast *and_or = ast_init();
+  struct ast *pipeline = parse_pipeline(return_value, context);
+  if (!and_or)
+  {
+    *return_value = 1; //error
+    ast_destroy(pipeline);
+    return NULL;
+  }
+  for (; pipeline; pipeline = parse_pipeline(return_value, context))
+  {
+    get_next_token(context);
+    if (!(context->token->type == AND_IF || context->token->type == OR_IF))
+    {
+      context->token_used = 0;
+      break;
+    }
+    else
+      ast_add_child(and_or, pipeline, context->token->token);
+    while (context->token->type == NEW_LINE)
+    {
+      context->token_used = 1;
+      get_next_token(context);
+    }
+
+  }
+  if (and_or->nb_children == 0)
+  {
+    ast_destroy(and_or);
+    *return_value = 1; //error
+    return NULL;
+  }
+  return and_or;
+}
+
+struct ast *parse_pipeline(int *return_value, struct context *context)
+{
   return_value = return_value;
   context = context;
   return NULL;
 }
-
-struct ast *parse_pipeline(int *return_value, struct context *context);
 struct ast *parse_command(int *return_value, struct context *context);
 struct ast *parse_simple_command(int *return_value, struct context *context);
