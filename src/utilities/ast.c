@@ -10,7 +10,7 @@ struct ast *ast_init()
   ast->capacity = 2;
   ast->children = malloc(sizeof(struct ast *) * ast->capacity);
   char **values = malloc(sizeof(char *) * ast->capacity);
-  if (!(ast->children && ast->values))
+  if (!(ast->children && values))
   {
     if (ast)
       free(ast);

@@ -7,9 +7,10 @@
 struct ast *ast_create(int *return_value)
 {
   struct token token;
+  token.token = NULL;
   struct context context =
   {
-    &token, NULL, 0, 0, 1, 0
+    &token, NULL, 0, 0, 1, 1
   };
   struct ast *ast = parse_input(return_value, &context);
   return ast;
@@ -21,7 +22,7 @@ struct ast *parse_input(int *return_value, struct context *context)
   *return_value = 0;
   if (!input)
   {
-    return_value = 1; //error
+    *return_value = 1; //error
     return input;
   }
   input->type = INPUT;
