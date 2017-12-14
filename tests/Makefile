@@ -11,13 +11,13 @@ SRC       = $(filter-out cmains/options.c ../src/exec/rule_case.c, \
 INCLUDES  = ../includes
 OBJ = $(SRC:.c=.o)
 
-BIN = bash
+BIN = 42sh
 
 .DEFAULT_GOAL := all
 .PHONY: all clean
 
 all: $(SRC)
-	$(CC) -I$(INCLUDES) -D$(CPPFLAGS) $(CFLAGS) -g $(SRC) -o ${BIN}
+	$(CC) -I$(INCLUDES) $(CFLAGS) -g $(SRC) -o ${BIN}
 
 clean:
 	${RM} ${OBJ} ${BIN}

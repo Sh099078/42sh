@@ -28,12 +28,6 @@ int simple_command(struct shell_env *env, struct ast *ast)
   char **argv = cmd_get_args(ast, cmd_idx);
   if (!argv)
     return 1; // TODO ERROR EXIT CODE
-  char *path = cmd_get_path(ast->values[0]);
-  if (!path)
-  {
-    free(argv);
-    return 1; // TODO EXIT CODE
-  }
   pid_t pid = fork();
   if (pid == 0)
   {
@@ -41,12 +35,11 @@ int simple_command(struct shell_env *env, struct ast *ast)
   }
   else if (pid < 0)
   {
-    warn("%s execution failed: could not fork:", ast->values[0]);
+    warn("%s execution failed: could not fork:", argv[0]);
     return 1; // TODO check SCL exit code
   }
-  int status = -1;
-  waitpid(pid, &status, WEXITED);
+  int status;
+  waitpid(pid, &status, 0);
   free(argv);
-  free(path);
   return status;
 }
