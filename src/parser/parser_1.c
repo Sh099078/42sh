@@ -71,9 +71,27 @@ struct ast *parse_and_or(int *return_value, struct context *context)
 
 struct ast *parse_pipeline(int *return_value, struct context *context)
 {
-  return_value = return_value;
-  context = context;
-  return NULL;
+  struct ast *pipeline = ast_init();
+  if (!(get_next_token(context) && pipeline))
+  {
+    *return_value = 1; //error
+    ast_destroy(pipeline);
+    return NULL;
+  }
+  context->token_used = context->token->type == Bang ? 1 : 0;
+  struct ast *command = parse_command(return_value, context);
+  for (; command; command = parse_command(return_value, context))
+  {
+    get_next_token(context);
+    char *token = context->token->token;
+    if (strcmp(token, "|"))
+    {
+      context->token_used = 0;
+      break;
+    }
+    while (get_next_token(context) && context->token->type == NEW_LINE)
+      context->token_used = 1;
+  }
 }
 struct ast *parse_command(int *return_value, struct context *context);
 struct ast *parse_simple_command(int *return_value, struct context *context);
