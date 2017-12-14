@@ -1,7 +1,9 @@
-
 #include <stdio.h>
 
-int main(void)
+#include "ast.h"
+#include "ast_exec.h"
+
+int main(int argc, char **argv)
 {
   struct ast *ast = malloc(sizeof(struct ast));
   ast->children = malloc(sizeof(struct ast*) * 3);
