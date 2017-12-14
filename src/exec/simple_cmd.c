@@ -1,18 +1,17 @@
 #include "ast_exec.h"
 
 
-static char **cmd_get_args(struct ast *ast, size_t start)
+char **cmd_get_args(struct ast *ast, size_t start)
 {
   char **argv = malloc(sizeof(char*) * (ast->nb_children - start + 1));
   if (!argv)
     return NULL;
-  argv[0] = ast->values[0];
   for (size_t i = 0; i < ast->nb_children; i++)
-    argv[i + 1] = ast->children[i + start]->values[0];
+    argv[i] = ast->children[i + start]->values[0];
   return argv;
 }
 
-static char *cmd_get_path(char *cmd_name)
+char *cmd_get_path(char *cmd_name)
 {
   char *path = malloc(sizeof("/bin/") + strlen(cmd_name));
   if (!path)
@@ -22,8 +21,9 @@ static char *cmd_get_path(char *cmd_name)
   return path;
 }
 
-int exec_simple_command(struct shell_env *env, struct ast *ast)
+int simple_command(struct shell_env *env, struct ast *ast)
 {
+  env = env; // No variables handled yet
   size_t cmd_idx = 0; // TODO check optional variables before cmd
   char **argv = cmd_get_args(ast, cmd_idx);
   if (!argv)
@@ -37,7 +37,7 @@ int exec_simple_command(struct shell_env *env, struct ast *ast)
   pid_t pid = fork();
   if (pid == 0)
   {
-    execv(path, argv);
+    execvp(argv[0], argv);
   }
   else if (pid < 0)
   {

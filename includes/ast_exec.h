@@ -13,6 +13,11 @@
 #include "struct.h"
 #include "string.h"
 
+// TO MAKE STATIC AFTER TESTINGS
+char **cmd_get_args(struct ast *ast, size_t start);
+char *cmd_get_path(char *cmd_name);
+// END TO MAKE STATIC
+
 int ast_exec(struct shell_env *env, struct ast *ast);
 int simple_command(struct shell_env *env, struct ast *ast);
 int and_or(struct shell_env *env, struct ast *ast);

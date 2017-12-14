@@ -1,6 +1,6 @@
 #include "ast_exec.h"
 
-int exec_rule_if(struct shell_env *env, struct ast *ast)
+int rule_if(struct shell_env *env, struct ast *ast)
 {
   if (ast->nb_children < 2)
     return 1; // TODO error

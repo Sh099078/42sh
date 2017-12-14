@@ -1,6 +1,6 @@
 #include "ast_exec.h"
 
-int exec_and_or(struct shell_env *env, struct ast *ast)
+int and_or(struct shell_env *env, struct ast *ast)
 {
   if (ast->nb_children < 2)
     return 1; // TODO ERROR SCL
