@@ -1,0 +1,21 @@
+{
+  "name": "Simple commands",
+  "tests": [
+    {
+      "name": "Test 1",
+      "input": "echo this is a test"
+    }
+    {
+      "name": "Test 2",
+      "input": "echo hello world \n\t\t\n\t\t\t\t\t00000"
+    }
+    {
+      "name": "Test 4",
+      "input": "echo hello world > hello"
+    }
+    {
+      "name": "Test 5",
+      "input": "cat hello"
+    }
+  ]
+}
