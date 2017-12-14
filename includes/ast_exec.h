@@ -13,12 +13,12 @@
 #include "struct.h"
 #include "string.h"
 
-char **cmd_get_args(struct ast *ast, size_t start);
-char *cmd_get_path(char *cmd_name);
-int exec_simple_command(struct ast *ast);
-int exec_and_or(struct ast *ast);
-int exec_rule_if(struct ast *ast);
-int ast_exec(struct ast *ast);
+int ast_exec(struct shell_env *env, struct ast *ast);
+int simple_command(struct shell_env *env, struct ast *ast);
+int and_or(struct shell_env *env, struct ast *ast);
+int rule_if(struct shell_env *env, struct ast *ast);
 int rule_for(struct shell_env *env, struct ast *ast);
+int rule_while(struct shell_env *env, struct ast *ast);
+int rule_until(struct shell_env *env, struct ast *ast);
 
 #endif /* AST_EXEC_H */

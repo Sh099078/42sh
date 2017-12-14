@@ -1,7 +1,7 @@
 #include "ast_exec.h"
 
 
-char **cmd_get_args(struct ast *ast, size_t start)
+static char **cmd_get_args(struct ast *ast, size_t start)
 {
   char **argv = malloc(sizeof(char*) * (ast->nb_children - start + 1));
   if (!argv)
@@ -12,7 +12,7 @@ char **cmd_get_args(struct ast *ast, size_t start)
   return argv;
 }
 
-char *cmd_get_path(char *cmd_name)
+static char *cmd_get_path(char *cmd_name)
 {
   char *path = malloc(sizeof("/bin/") + strlen(cmd_name));
   if (!path)
@@ -22,7 +22,7 @@ char *cmd_get_path(char *cmd_name)
   return path;
 }
 
-int exec_simple_command(struct ast *ast)
+int exec_simple_command(struct shell_env *env, struct ast *ast)
 {
   size_t cmd_idx = 0; // TODO check optional variables before cmd
   char **argv = cmd_get_args(ast, cmd_idx);

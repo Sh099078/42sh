@@ -8,10 +8,10 @@
  * @return  The exit status of the until loop will be the exit status of the
  * last compound-list-2 executed, or zero if none was executed.
  */
-int rule_until(struct ast *ast)
+int rule_until(struct shell_env *env, struct ast *ast)
 {
   int cmpdlist2 = 0;
-  while (ast_exec(ast->children[0]) != 0)
-    cmpdlist2 = ast_exec(ast->children[1]);
+  while (ast_exec(env, ast->children[0]) != 0)
+    cmpdlist2 = ast_exec(env, ast->children[1]);
   return cmpdlist2;
 }

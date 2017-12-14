@@ -52,7 +52,7 @@ int rule_for(struct shell_env *env, struct ast *ast)
   for (size_t i = 0; seq[i]; i++)
   {
     add_variable(env, key, seq[i]); // updates variable
-    status = ast_exec(ast->children[2]);
+    status = ast_exec(env, ast->children[2]);
   }
   return status;
 }
