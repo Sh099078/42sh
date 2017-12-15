@@ -21,6 +21,7 @@ char *cmd_get_path(char *cmd_name);
 int ast_exec(struct shell_env *env, struct ast *ast);
 int input(struct shell_env *env, struct ast *ast);
 int list(struct shell_env *env, struct ast *ast);
+int pipeline(struct shell_env *env, struct ast *ast);
 int simple_command(struct shell_env *env, struct ast *ast);
 int and_or(struct shell_env *env, struct ast *ast);
 int rule_if(struct shell_env *env, struct ast *ast);
