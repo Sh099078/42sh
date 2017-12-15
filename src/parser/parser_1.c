@@ -24,6 +24,7 @@ struct ast *parse_list(int *return_value, struct context *context)
       break;
     }
   }
+  context->token_used = 1;
 
   if (!list->nb_children)
     return abort_parsing(list, return_value);
@@ -46,8 +47,8 @@ struct ast *parse_and_or(int *return_value, struct context *context)
       context->token_used = 0;
       break;
     }
-    else
-      ast_add_child(and_or, pipeline, context->token->token);
+    context->token_used = 1;
+    ast_add_child(and_or, pipeline, context->token->token);
     while (context->token->type == NEW_LINE)
     {
       context->token_used = 1;
@@ -80,6 +81,7 @@ struct ast *parse_pipeline(int *return_value, struct context *context)
       context->token_used = 0;
       break;
     }
+    context->token_used = 1;
     while (get_next_token(context) && context->token->type == NEW_LINE)
       context->token_used = 1;
   }
