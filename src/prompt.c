@@ -28,39 +28,13 @@ static void error_handler(int return_value, char **line)
 
 int prompt(void)
 {
-  /*struct aliases_lst *aliases;
-  struct functions_lst *functions;
-  struct variables_lst *variables;
-  */
-  //char *line = NULL;
-  int return_value = 0; //think about the 'echo $?' command.
+  int return_value = 0;
   while (1)
   {
-    if (isatty(0))
-      printf("42sh ");
-
-    /*char *new_line = get_next_line(input, line);
-    if (!new_line) //end of input
-      break;
-
-    if (line)
-      free(line);
-    line = new_line;
-
-    struct ast *ast = ast_create(line, &return_value);
-    if (!ast)
-      error_handler(return_value, &line);
-    else
-    {
-      free(line);
-      line = NULL;
-      return_value = ast_exec(ast);
-    }*/
-
     struct ast *ast = ast_create(&return_value);
     if (!ast)
       break;
-    //ast_exec(ast);
+    ast_exec(ast);
     ast_destroy(ast);
   }
   return return_value;
