@@ -4,7 +4,7 @@
 
 #include "ast.h"
 #include "parser.h"
-//#include "ast_exec.h"
+#include "ast_exec.h"
 #include "struct.h"
 
 /*
