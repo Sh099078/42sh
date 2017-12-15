@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "parser_4.h"
+#include "parser.h"
 
 struct ast *parse_rule_if(int *return_value, struct context *context);
 struct ast *parse_else_clause(int *return_value, struct context *context);

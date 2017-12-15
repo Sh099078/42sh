@@ -170,6 +170,7 @@ int get_next_token(struct context *context)
   //return token->token || token->type == NEW_LINE;
 }
 
+/*
 #include <stdio.h>
 static void print_token_type(struct token token)
 {
@@ -215,3 +216,4 @@ int main(void)
   }
   return 0;
 }
+*/

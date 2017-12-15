@@ -1,15 +1,9 @@
 #include <stdlib.h>
 
 #include "parser_1.h"
-#include "lexer.h"
+#include "parser_2.h"
+#include "parser.h"
 #include "string.h"
-
-static struct ast* abort_parsing(struct ast *ast, int *return_value)
-{
-  *return_value = 1; //error
-  ast_destroy(ast);
-  return NULL;
-}
 
 struct ast *parse_list(int *return_value, struct context *context)
 {
@@ -89,7 +83,37 @@ struct ast *parse_pipeline(int *return_value, struct context *context)
     while (get_next_token(context) && context->token->type == NEW_LINE)
       context->token_used = 1;
   }
+
+  return pipeline;
 }
 
-struct ast *parse_command(int *return_value, struct context *context);
-struct ast *parse_simple_command(int *return_value, struct context *context);
+struct ast *parse_command(int *return_value, struct context *context)
+{
+  return parse_simple_command(return_value, context);
+}
+
+struct ast *parse_simple_command(int *return_value, struct context *context)
+{
+  struct ast *simple_command = ast_init();
+  struct ast *prefix = parse_prefix(return_value, context);
+  int element_created = 0;
+
+  if (!simple_command)
+    return abort_parsing(prefix, return_value);
+
+  for (; prefix; prefix = parse_prefix(return_value, context))
+    ast_add_child(simple_command, prefix, NULL);
+
+  struct ast *element = parse_element(return_value, context);
+
+  for (; element; element = parse_element(return_value, context))
+  {
+    ast_add_child(simple_command, element, NULL);
+    element_created = 1;
+  }
+
+  if (!element_created)
+    abort_parsing(simple_command, return_value);
+
+  return simple_command;
+}

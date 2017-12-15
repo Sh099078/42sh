@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "parser_3.h"
+#include "parser.h"
 
 struct ast *parse_compound_list(int *return_value, struct context *context);
 struct ast *parse_rule_for(int *return_value, struct context *context);

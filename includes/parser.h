@@ -2,6 +2,13 @@
 #define PARSER_H
 
 #include "ast.h"
+#include "lexer.h" //so that we don't have to include it 15x
+#include "parser_1.h"
+#include "parser_2.h"
+#include "parser_3.h"
+#include "parser_4.h"
+
+struct ast *abort_parsing(struct ast *ast, int *return_value);
 
 /*
 ** Tries to create a valid ast from the char* command.

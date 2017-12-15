@@ -1,8 +1,13 @@
 #include <stdlib.h>
 
 #include "parser.h"
-#include "parser_1.h"
-#include "lexer.h"
+
+struct ast *abort_parsing(struct ast *ast, int *return_value)
+{
+  *return_value = 1; //error
+  ast_destroy(ast);
+  return NULL;
+}
 
 struct ast *ast_create(int *return_value)
 {

@@ -26,7 +26,9 @@ enum node_type
   DO_GROUP,
   CASE_CLAUSE,
   CASE_ITEM,
-  WORD
+  WORD,
+  ASSIGNMENT_WORD,
+  SEGFAULT
 };
 
 enum token_type

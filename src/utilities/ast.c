@@ -18,7 +18,7 @@ struct ast *ast_init()
       free(values);
     return NULL;
   }
-  ast->type = 0;
+  ast->type = SEGFAULT;
   ast->nb_children = 0;
   return ast;
 }
