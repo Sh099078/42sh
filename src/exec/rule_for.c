@@ -35,14 +35,6 @@ static char **get_seq(struct ast *ast)
   return seq;
 }
 
-/**
- * Executes a bash style for loop
- * First child is sequence to iterate on, the second is the variable key, and
- * the third child is the compound_list to execute
- * @param  ast AST node corresponding to the for loop
- * @return     last command executed exit status on success,
- * an error code otherwise
- */
 int rule_for(struct shell_env *env, struct ast *ast)
 {
   // TODO error checking
