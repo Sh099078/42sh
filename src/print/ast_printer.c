@@ -38,7 +38,7 @@ static char *get_type2(int x)
   return NULL;
 }
 
-static char *get_type1(int x)
+static char *type_to_char(int x)
 {
   switch(x)
   {
@@ -68,49 +68,34 @@ static char *get_type1(int x)
   return NULL;
 }
 
-static FILE *ast_children(struct ast *ast, FILE *file)
+void *to_void(void *ast)
 {
-  char *data;
-  void *tmp_ast = ast;
-  void *tmp_chili;
-  if(ast->nb_children == 0)
+  return ast;
+}
+
+static void nodes_to_dot(struct ast *ast, FILE *f)
+{
+  if (!ast)
+    return;
+
+  fprintf(f, "\"%p\" [label=\"%s\"\n", to_void(ast), type_to_char(ast->type));
+  for (size_t i = 0; i < ast->nb_children; i++)
   {
-    for(int i = 0 ; ast->values[i] ; i++)
-    {
-      tmp_chili = &ast->values[i];
-      fprintf(file, "\"%p\" [label=\"%s\"]\n", tmp_chili, ast->values[i]);
-      fprintf(file, "\"%p\" -> \"%p\"\n", tmp_ast, tmp_chili);
-    }
+    if (ast->type != ELEMENT && ast->type != PREFIX)
+      nodes_to_dot(ast->children[i], f);
+    else
+      fprintf(f, "\"%p\" [label=\"%s\"]\n", to_void(ast->children[0]), ast->values[0]);
+    fprintf(f, "\"%p\" -> \"%p\"\n", to_void(ast), to_void(ast->children[i]));
   }
-  else
-  {
-    data = get_type1(ast->type);
-    fprintf(file, "\"%p\" [label=\"%s\"]\n", tmp_ast, data);
-    for(size_t i = 0 ; i < ast->nb_children ; i++)
-    {
-      tmp_chili = ast->children[i];
-      data = get_type1(ast->children[i]->type);
-      fprintf(file, "\"%p\" [label=\"%s\"]\n", tmp_chili, data);
-      fprintf(file, "\"%p\" -> \"%p\"\n", tmp_ast, tmp_chili);
-      file = ast_children(ast->children[i], file);
-    }
-  }
-  return file;
 }
 
 void ast_to_dot(struct ast *ast)
 {
   FILE *file = fopen("ast.dot", "w+");
+  if (!file)
+    return;
   fprintf(file, "digraph G {\n");
-  char *data;
-  void *tmp_ast = ast;
-  if(ast && ast->nb_children == 0)
-  {
-    data = get_type1(ast->type);
-    fprintf(file, "\"%p\" [label=\"%s\"]\n", tmp_ast, data);
-  }
-  else if(ast)
-    file = ast_children(ast, file);
+  nodes_to_dot(ast, file);
   fprintf(file, "}");
   fclose(file);
 }
