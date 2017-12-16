@@ -61,6 +61,8 @@ static void token_update_type(struct token *token)
   if (!token->token)
   {
     token->type = NEW_LINE;
+    token->token = malloc(sizeof(char));
+    token->token[0] = 0;
     return;
   }
   char *reserved_words[] =
