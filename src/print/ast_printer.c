@@ -2,9 +2,9 @@
 
 #include "ast_printer.h"
 
-static char *get_type2(int x)
+static char *the_enum_must_go_on(enum node_type type)
 {
-  switch(x)
+  switch(type)
   {
     case ELEMENT:
       return "ELEMENT";
@@ -34,13 +34,15 @@ static char *get_type2(int x)
       return "ASSIGNMENT_WORD";
     case SEGFAULT:
       return "DEFAULT";
-  }
+    default:
+      return "UNKNOWN";
+  };
   return NULL;
 }
 
-static char *type_to_char(int x)
+static char *type_to_char(enum node_type type)
 {
-  switch(x)
+  switch(type)
   {
     case INPUT:
       return "INPUT";
@@ -63,12 +65,12 @@ static char *type_to_char(int x)
     case PREFIX:
       return "PREFIX";
     default:
-      return get_type2(x);
-  }
+      return the_enum_must_go_on(type);
+  };
   return NULL;
 }
 
-void *to_void(void *ast)
+static void *to_void(void *ast)
 {
   return ast;
 }
