@@ -1,0 +1,29 @@
+{
+  "name": "And/OR commands (&& and ||)",
+  "tests": [
+    {
+      "name": "Test 1",
+      "input": "echo Hello && echo World!"
+    },
+    {
+      "name": "Test 2",
+      "input": "ech Hello || echo World!"
+    },
+    {
+      "name": "Test 2",
+      "input": "echo Hello || ech World!"
+    },
+    {
+      "name": "Test 4",
+      "input": "echo Hello || echo World!"
+    },
+    {
+      "name": "Test 4",
+      "input": "echo Hello && ech World!"
+    },
+    {
+      "name": "Test 5",
+      "input": "ech Hello && echo World!"
+    }
+  ]
+}
