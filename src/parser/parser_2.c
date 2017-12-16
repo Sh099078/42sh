@@ -15,9 +15,7 @@ struct ast *parse_prefix(int *return_value, struct context *context)
 
 struct ast *parse_element(int *return_value, struct context *context)
 {
-  //if (context->new_line_added)
-    //return NULL;
-  if (!context->token_used && context->token->type == NEW_LINE)
+  if (/*!context->token_used && */context->token->type == NEW_LINE)
     return NULL;
 
   struct ast *element = ast_init();
