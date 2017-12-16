@@ -32,8 +32,22 @@ static int get_next_andor(char **argv)
 
 static struct ast *ast_incr_capacity(struct ast *ast)
 {
-  ast = ast;
-  return NULL;
+  int new_capacity = ast->capacity * 2;
+  void *tmp_children = realloc(ast->children,
+                               sizeof(struct(ast)) * new_capacity);
+  if (!tmp_children)
+    return NULL;
+  void *tmp_values = realloc(ast->values,
+                               sizeof(char*) * new_capacity);
+  if (!tmp_values)
+  {
+    free(tmp_children);
+    return NULL;
+  }
+  ast->capacity = new_capacity;
+  ast->children = tmp_children;
+  ast->values = tmp_values;
+  return ast;
 }
 
 struct ast *create_and_or_ast(int argc, char **argv)
