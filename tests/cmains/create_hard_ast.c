@@ -24,6 +24,10 @@ struct ast *create_simple_cmd_ast(int argc, char **argv)
 static int get_next_andor(char **argv)
 {
   // argv is null terminated
+  int i = 0;
+  while (argv[i] && (!strcmp(argv[i], "&&") || !strcmp(argv[i], "||")))
+    i++;
+  return argv[i] ? i : -1;
 }
 
 static struct ast *ast_incr_capacity(struct ast *ast)
