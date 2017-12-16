@@ -17,6 +17,10 @@ target_link_libraries(42sh readline)
 
 # CUSTOM RULES
 
+set_property(DIRECTORY PROPERTY ADDITIONAL_MAKE_CLEAN_FILES
+  "${EXECUTABLE_OUTPUT_PATH}/doc/latex"
+  "${EXECUTABLE_OUTPUT_PATH}/doc/html")
+
 add_custom_target(doc
   COMMAND doxygen doc/Doxyfile
   COMMAND ${BROWSER} doc/html/index.html
