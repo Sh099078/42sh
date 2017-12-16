@@ -2,9 +2,26 @@
 
 #include "ast_printer.h"
 
+static char *yeaiiiiyeaah(enum node_type type)
+{
+  switch (type)
+  {
+    case CASE_ITEM:
+      return "CASE_ITEM";
+    case WORD:
+      return "WORD";
+    case ASSIGNMENT_WORD:
+      return "ASSIGNMENT_WORD";
+    case SEGFAULT:
+      return "DEFAULT";
+    default:
+      return "UNKNOWN";
+  };
+}
+
 static char *the_enum_must_go_on(enum node_type type)
 {
-  switch(type)
+  switch (type)
   {
     case ELEMENT:
       return "ELEMENT";
@@ -26,23 +43,14 @@ static char *the_enum_must_go_on(enum node_type type)
       return "DO_GROUP";
     case CASE_CLAUSE:
       return "CASE_CLAUSE";
-    case CASE_ITEM:
-      return "CASE_ITEM";
-    case WORD:
-      return "WORD";
-    case ASSIGNMENT_WORD:
-      return "ASSIGNMENT_WORD";
-    case SEGFAULT:
-      return "DEFAULT";
     default:
-      return "UNKNOWN";
+      return yeaiiiiyeaah(type);
   };
-  return NULL;
 }
 
 static char *type_to_char(enum node_type type)
 {
-  switch(type)
+  switch (type)
   {
     case INPUT:
       return "INPUT";
@@ -67,7 +75,6 @@ static char *type_to_char(enum node_type type)
     default:
       return the_enum_must_go_on(type);
   };
-  return NULL;
 }
 
 static void *to_void(void *ast)
@@ -80,7 +87,7 @@ static void nodes_to_dot(struct ast *ast, FILE *f)
   if (!ast)
     return;
 
-  fprintf(f, "\"%p\" [label=\"%s\"\n", to_void(ast), type_to_char(ast->type));
+  fprintf(f, "\"%p\" [label=\"%s\"]\n", to_void(ast), type_to_char(ast->type));
   for (size_t i = 0; i < ast->nb_children; i++)
   {
     if (ast->type != ELEMENT && ast->type != PREFIX)
