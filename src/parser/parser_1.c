@@ -38,24 +38,29 @@ struct ast *parse_and_or(int *return_value, struct context *context)
 {
   struct ast *and_or = ast_init();
   struct ast *pipeline = parse_pipeline(return_value, context);
+
   if (!and_or)
     return abort_parsing(pipeline, return_value);
 
   for (; pipeline; pipeline = parse_pipeline(return_value, context))
   {
     get_next_token(context);
-    if (!(context->token->type == AND_IF || context->token->type == OR_IF))
+    if (context->token->type == AND_IF || context->token->type == OR_IF)
+      ast_add_child(and_or, pipeline, context->token->token);
+    else
     {
+      ast_add_child(and_or, pipeline, NULL);
       context->token_used = 0;
       break;
     }
     context->token_used = 1;
-    ast_add_child(and_or, pipeline, context->token->token);
+    get_next_token(context);
     while (context->token->type == NEW_LINE)
     {
       context->token_used = 1;
       get_next_token(context);
     }
+    context->token_used = 0;
   }
 
   if (and_or->nb_children == 0)
