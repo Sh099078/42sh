@@ -93,7 +93,8 @@ static void nodes_to_dot(struct ast *ast, FILE *f)
     if (ast->type != ELEMENT && ast->type != PREFIX)
       nodes_to_dot(ast->children[i], f);
     else
-      fprintf(f, "\"%p\" [label=\"%s\"]\n", to_void(ast->children[0]), ast->values[0]);
+      fprintf(f, "\"%p\" [label=\"%s\"]\n", to_void(ast->children[0]),
+          ast->values[0]);
     fprintf(f, "\"%p\" -> \"%p\"\n", to_void(ast), to_void(ast->children[i]));
   }
 }
