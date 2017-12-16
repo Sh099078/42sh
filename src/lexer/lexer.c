@@ -102,11 +102,28 @@ int get_next_token(struct context *context)
   int simple_quote = 0;
   int double_quote = 0;
   int quoting = 0;
+  int loop = 1;
   token_init(context);
-  if ((!context->line || !context->line[context->line_index]) && !ask_new_line(context))
-      return 0;
+  if (!(context->line || ask_new_line(context)))
+    return 0;
+  else if (!context->line[context->line_index])
+  {
+    if (context->new_line_added)
+    {
+      if (!ask_new_line(context))
+        return 0;
+      context->new_line_added = 0;
+    }
+    else
+    {
+      context->new_line_added = 1;
+      loop = 0;
+    }
+  }
+  //if ((!context->line || !context->line[context->line_index]) && !ask_new_line(context))
+      //return 0;
 
-  while (1)
+  while (loop)
   {
     char c = context->line[context->line_index];
     context->line_index = c ? context->line_index + 1 : context->line_index;
@@ -205,7 +222,7 @@ int main(void)
 {
   struct token token;
   token.token = NULL;
-  struct context context = { &token, NULL, 0, 0, 1, 1 };
+  struct context context = { &token, NULL, 0, 0, 1, 1, 0 };
   for(int i = 0; i < 100; i++)
   {
     if (!get_next_token(&context))

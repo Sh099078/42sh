@@ -98,6 +98,7 @@ struct context
   size_t line_index;
   int first_line;
   int token_used;
+  int new_line_added;
 };
 
 #endif /* AST_H */

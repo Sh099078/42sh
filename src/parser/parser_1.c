@@ -7,6 +7,10 @@
 
 struct ast *parse_list(int *return_value, struct context *context)
 {
+  //if (context->new_line_added)
+    //return NULL;
+  //context->token_used = !(context->token->type == NEW_LINE);
+
   struct ast *list = ast_init();
   struct ast *and_or = parse_and_or(return_value, context);
 
@@ -34,6 +38,10 @@ struct ast *parse_list(int *return_value, struct context *context)
 
 struct ast *parse_and_or(int *return_value, struct context *context)
 {
+  //if (context->new_line_added)
+    //return NULL;
+  //context->token_used = !(context->token->type == NEW_LINE);
+
   struct ast *and_or = ast_init();
   struct ast *pipeline = parse_pipeline(return_value, context);
   if (!and_or)
@@ -91,13 +99,21 @@ struct ast *parse_pipeline(int *return_value, struct context *context)
 
 struct ast *parse_command(int *return_value, struct context *context)
 {
+  //if (context->new_line_added)
+    //return NULL;
+  //context->token_used = !(context->token->type == NEW_LINE);
   return parse_simple_command(return_value, context);
 }
 
 struct ast *parse_simple_command(int *return_value, struct context *context)
 {
+  //if (context->new_line_added)
+    //return NULL;
+  //context->token_used = !(context->token->type == NEW_LINE);
+
   struct ast *simple_command = ast_init();
   struct ast *prefix = parse_prefix(return_value, context);
+  simple_command->type = SIMPLE_COMMAND;
   int element_created = 0;
 
   if (!simple_command)
