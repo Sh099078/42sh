@@ -7,7 +7,9 @@ require 'json'
 require 'colorize'
 
 jsonFiles = Dir.glob('inputs/*.json')
+pathTo42sh = File.expand_path('../42sh', File.dirname(__FILE__))
 nbError = 0;
+verbose = ARGV[0] == '-v'
 jsonFiles.each do |file|
   content = File.read(file)
   parsedJson = JSON.parse(content)
@@ -18,14 +20,19 @@ jsonFiles.each do |file|
   testArray.each do |hash|
     mybashOut = {}
     bashOut = {}
-    # Execute my 42sh renamed as bash
-    Open3.popen3("bash") do |stdin , stdout , stderr , t|
+    # Execute my 42sh
+    Open3.popen3('bash') do |stdin , stdout , stderr , t|
       # write program input
       stdin.puts hash['input']
       stdin.close
       # get output
       mybashOut[:stdout] = stdout.read
-      mybashOut[:stderr] = stderr.read
+      err = stderr.read
+      if err != ''
+        mybashOut[:stderr] = err[err[/.*?:/].length-1..-1]
+      else
+        mybashOut[:stderr] = err
+      end
       mybashOut[:exitcode] = t.value.exitstatus
     end
     # Execute real bash
@@ -36,40 +43,45 @@ jsonFiles.each do |file|
       # get output
       bashOut[:stdout] = stdout.read
       bashOut[:stderr] = stderr.read
-      if bashOut[:stderr] != ""
-        bashOut[:stderr] = bashOut[:stderr][5..-1]
+      err = stderr.read
+      if err != ''
+        bashOut[:stderr] = err[err[/.*?:/].length-1..-1]
+      else
+        bashOut[:stderr] = err
       end
       bashOut[:exitcode] = t.value.exitstatus
     end
     # compare outputs from bash and 42sh
     testNbError = nbError
-    $stdout.puts "\n\t\#\#\#   #{hash['name']}   \#\#\#"
+    $stdout.puts "\n\t\#\#\#   #{hash['name']}:#{hash['input']}   \#\#\#"
+    if verbose
+      $stdout.print "42sh:\nout: #{mybashOut[:stdout]}\nerr:#{mybashOut[:stderr]}\nexit:#{mybashOut[:exitcode]}\n"
+      $stdout.print "bash:\nout: #{bashOut[:stdout]}\nerr:#{bashOut[:stderr]}\nexit:#{bashOut[:exitcode]}\n"
+    end
     if mybashOut[:stdout] != bashOut[:stdout]
       $stderr.puts "STDOUT does not match".colorize(:light_red)
-      $stderr.puts "expected:\n#{bashOut[:stdout]}\n42sh:\n#{mybashOut[:stdout]}"
+      $stderr.puts "expected:#{bashOut[:stdout]}\n42sh:#{mybashOut[:stdout]}"
       nbError += 1;
     end
     if mybashOut[:stderr] != bashOut[:stderr]
       $stderr.puts "STDERR does not match".colorize(:light_red)
-      $stderr.puts "expected:\n#{bashOut[:stderr]}\n42sh:\n#{mybashOut[:stderr]}"
+      $stderr.puts "expected:#{bashOut[:stderr]}\n42sh:#{mybashOut[:stderr]}"
       nbError += 1;
     end
     if mybashOut[:exitcode] != bashOut[:exitcode]
       $stderr.puts "EXIT STATUS does not match".colorize(:light_red)
-      $stderr.puts "expected:\n#{bashOut[:exitcode]}\n42sh:\n#{mybashOut[:exitcode]}"
+      $stderr.puts "expected:#{bashOut[:exitcode]}\n42s\n#{mybashOut[:exitcode]}"
       nbError += 1;
     end
-    puts mybashOut
-    puts bashOut
     if nbError != testNbError
-      $stderr.puts "\n#{hash[:name]} failed with #{nbError - testNbError} errors.".colorize(:light_red)
+      $stderr.puts "\n#{hash['name']} failed with #{nbError - testNbError} errors.".colorize(:light_red)
     else
-      $stdout.puts "\n#{hash[:name]} passed succesfully.".colorize(:light_green)
+      $stdout.puts "\n#{hash['name']} passed succesfully.".colorize(:light_green)
     end
   end
   if nbError > 0
-    $stderr.puts "\n#{parsedJson[:name]} tests finished with #{nbError} errors".colorize(:red)
+    $stderr.puts "\n#{parsedJson['name']} tests finished with #{nbError} errors".colorize(:red)
   else
-    $stdout.puts "\n#{parsedJson[:name]} tests finished succesfully".colorize(:light_green)
+    $stdout.puts "\n#{parsedJson['name']} tests finished succesfully".colorize(:light_green)
   end
 end
