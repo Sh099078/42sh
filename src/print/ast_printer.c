@@ -1,4 +1,5 @@
-#include "ast.h"
+#include <stdio.h>
+
 #include "ast_printer.h"
 
 static char *get_type2(int x)

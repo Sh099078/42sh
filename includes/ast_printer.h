@@ -1,8 +1,7 @@
 #ifndef AST_PRINTER_H
 #define AST_PRINTER_H
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "ast.h"
 
 void ast_to_dot(struct ast *ast);
 
