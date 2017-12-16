@@ -1,7 +1,7 @@
 #include "ast.h"
 #include "ast_printer.h"
 
-char *get_type2(int x)
+static char *get_type2(int x)
 {
   switch(x)
   {
@@ -37,7 +37,7 @@ char *get_type2(int x)
   return NULL;
 }
 
-char *get_type1(int x)
+static char *get_type1(int x)
 {
   switch(x)
   {
@@ -67,8 +67,7 @@ char *get_type1(int x)
   return NULL;
 }
 
-
-FILE *ast_children(struct ast *ast, FILE *file)
+static FILE *ast_children(struct ast *ast, FILE *file)
 {
   char *data;
   void *tmp_ast = ast;
@@ -89,10 +88,7 @@ FILE *ast_children(struct ast *ast, FILE *file)
     for(size_t i = 0 ; i < ast->nb_children ; i++)
     {
       tmp_chili = ast->children[i];
-      if(ast->children[i]->type < 10)
-        data = get_type1(ast->children[i]->type);
-      else if(ast->children[i]->type < 22)
-        data = get_type2(ast->children[i]->type);
+      data = get_type1(ast->children[i]->type);
       fprintf(file, "\"%p\" [label=\"%s\"]\n", tmp_chili, data);
       fprintf(file, "\"%p\" -> \"%p\"\n", tmp_ast, tmp_chili);
       file = ast_children(ast->children[i], file);
@@ -100,7 +96,6 @@ FILE *ast_children(struct ast *ast, FILE *file)
   }
   return file;
 }
-
 
 void ast_to_dot(struct ast *ast)
 {
@@ -110,10 +105,7 @@ void ast_to_dot(struct ast *ast)
   void *tmp_ast = ast;
   if(ast && ast->nb_children == 0)
   {
-    if(ast->type <10)
-      data = get_type1(ast->type);
-    else if(ast->type < 22)
-      data = get_type2(ast->type);
+    data = get_type1(ast->type);
     fprintf(file, "\"%p\" [label=\"%s\"]\n", tmp_ast, data);
   }
   else if(ast)
