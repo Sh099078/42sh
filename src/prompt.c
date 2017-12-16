@@ -7,25 +7,7 @@
 #include "ast_exec.h"
 #include "struct.h"
 #include "struct.h"
-
-/*
-static void error_handler(int return_value, char **line)
-{
-  switch (return_value)
-  {
-    case 1:
-      // lexor error ; ask for more lines and try again
-      break;
-    case 2:
-      // parser error : syntax error, incorrect var...
-      free(*line);
-      *line = NULL;
-      break;
-    default:
-      break;
-  }
-}
-*/
+#include "ast_printer.h"
 
 int prompt(void)
 {
@@ -34,14 +16,15 @@ int prompt(void)
     return 1;
 
   int return_value = 0;
-  while (1)
-  {
+  //while (1)
+  //{
     struct ast *ast = ast_create(&return_value);
     if (!ast)
-      break;
-    ast_exec(env, ast);
+      return return_value; //break;
+    //ast_exec(env, ast);
+    ast_to_dot(ast);
     ast_destroy(ast);
-  }
+  //}
 
   free(env);
   return return_value;
