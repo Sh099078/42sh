@@ -54,12 +54,8 @@ struct ast *parse_and_or(int *return_value, struct context *context)
       break;
     }
     context->token_used = 1;
-    get_next_token(context);
-    while (context->token->type == NEW_LINE)
-    {
+    while (get_next_token(context) && context->token->type == NEW_LINE)
       context->token_used = 1;
-      get_next_token(context);
-    }
     context->token_used = 0;
   }
 
@@ -76,21 +72,25 @@ struct ast *parse_pipeline(int *return_value, struct context *context)
   if (!(get_next_token(context) && pipeline))
     return abort_parsing(pipeline, return_value);
 
-  context->token_used = context->token->type == Bang ? 1 : 0;
+  context->token_used = context->token->type == Bang ? 1 : context->token_used;
 
   struct ast *command = parse_command(return_value, context);
+
   for (; command; command = parse_command(return_value, context))
   {
     get_next_token(context);
-    char *token = context->token->token;
-    if (strcmp(token, "|"))
+    if (strcmp(context->token->token, "|") == 0)
+      ast_add_child(pipeline, command, context->token->token);
+    else
     {
+      ast_add_child(pipeline, command, NULL);
       context->token_used = 0;
       break;
     }
     context->token_used = 1;
     while (get_next_token(context) && context->token->type == NEW_LINE)
       context->token_used = 1;
+    context->token_used = 0;
   }
 
   return pipeline;
