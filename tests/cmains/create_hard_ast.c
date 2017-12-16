@@ -20,9 +20,22 @@ struct ast *create_simple_cmd_ast(int argc, char **argv)
   return ast;
 }
 
+// TODO nextToken + ast_incr_capacity
+
 struct ast *create_and_or_ast(int argc, char **argv)
 {
-  argc = argc;
-  argv = argv;
-  return NULL;
+  struct ast *ast = ast_init();
+  // loop with i
+  int nextCmd = 0; // next simple command index
+  int nextAndOr = get_next_andor(argv); // get index of next && || operator
+  int child = 0;
+  while (nextAndOr > 0)
+  {
+    if (child == ast->capacity && !ast_incr_capacity(ast))
+      return NULL;
+    ast->children[child++] = create_simple_cmd_ast(nextAndOr, argv + nextCmd);
+    nextCmd += nextAndOr;
+    nextAndOr = get_next_andor(argv); // get index of next && || operator
+  }
+  return ast;
 }
