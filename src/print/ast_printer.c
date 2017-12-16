@@ -1,66 +1,72 @@
 #include "ast.h"
 #include "ast_printer.h"
 
+char *get_type2(int x)
+{
+  switch(x)
+  {
+    case ELEMENT:
+      return "ELEMENT";
+    case COMPOUND_LIST:
+      return "COMPOUND_LIST";
+    case RULE_FOR:
+      return "RULE_FOR";
+    case RULE_WHILE:
+      return "RULE_WHILE";
+    case RULE_UNTIL:
+      return "RULE_UNTIL";
+    case RULE_CASE:
+      return "RULE_CASE";
+    case RULE_IF:
+      return "RULE_IF";
+    case ELSE_CLAUSE:
+      return "ELSE_CLAUSE";
+    case DO_GROUP:
+      return "DO_GROUP";
+    case CASE_CLAUSE:
+      return "CASE_CLAUSE";
+    case CASE_ITEM:
+      return "CASE_ITEM";
+    case WORD:
+      return "WORD";
+    case ASSIGNMENT_WORD:
+      return "ASSIGNMENT_WORD";
+    case SEGFAULT:
+      return "DEFAULT";
+  }
+  return NULL;
+}
 
 char *get_type1(int x)
 {
   switch(x)
   {
-    case 0:
+    case INPUT:
       return "INPUT";
-    case 1:
+    case LIST:
       return "LIST";
-    case 2:
+    case AND_OR:
       return "AND_OR";
-    case 3:
+    case PIPELINE:
       return "PIPELINE";
-    case 4:
+    case COMMAND:
       return "COMMAND";
-    case 5:
+    case SIMPLE_COMMAND:
       return "SIMPLE_COMMAND";
-    case 6:
+    case SHELL_COMMAND:
       return "SHELL_COMMAND";
-    case 7:
+    case FUNCDEF:
       return "FUNCDEF";
-    case 8:
+    case REDIRECTION:
       return "REDIRECTION";
-    case 9:
+    case PREFIX:
       return "PREFIX";
+    default:
+      return get_type2(x);
   }
   return NULL;
 }
 
-char *get_type2(int x)
-{
-  switch(x)
-  {
-    case 10:
-      return "ELEMENT";
-    case 11:
-      return "COMPOUND_LIST";
-    case 12:
-      return "RULE_FOR";
-    case 13:
-      return "RULE_WHILE";
-    case 14:
-      return "RULE_UNTIL";
-    case 15:
-      return "RULE_CASE";
-    case 16:
-      return "RULE_IF";
-    case 17:
-      return "ELSE_CLAUSE";
-    case 18:
-      return "DO_GROUP";
-    case 19:
-      return "CASE_CLAUSE";
-    case 20:
-      return "CASE_ITEM";
-    case 21:
-      return "WORD";
-  }
-  return NULL;
-}
 
 FILE *ast_children(struct ast *ast, FILE *file)
 {
@@ -78,10 +84,7 @@ FILE *ast_children(struct ast *ast, FILE *file)
   }
   else
   {
-    if(ast->type <10)
-      data = get_type1(ast->type);
-    else if(ast->type < 22)
-      data = get_type2(ast->type);
+    data = get_type1(ast->type);
     fprintf(file, "\"%p\" [label=\"%s\"]\n", tmp_ast, data);
     for(size_t i = 0 ; i < ast->nb_children ; i++)
     {
