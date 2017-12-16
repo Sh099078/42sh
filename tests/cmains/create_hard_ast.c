@@ -21,6 +21,16 @@ struct ast *create_simple_cmd_ast(int argc, char **argv)
 }
 
 // TODO nextToken + ast_incr_capacity
+static int get_next_andor(char **argv)
+{
+  // argv is null terminated
+}
+
+static struct ast *ast_incr_capacity(struct ast *ast)
+{
+  ast = ast;
+  return NULL;
+}
 
 struct ast *create_and_or_ast(int argc, char **argv)
 {
