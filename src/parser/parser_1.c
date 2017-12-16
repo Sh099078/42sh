@@ -53,10 +53,14 @@ struct ast *parse_and_or(int *return_value, struct context *context)
       context->token_used = 0;
       break;
     }
-    context->token_used = 1;
-    while (get_next_token(context) && context->token->type == NEW_LINE)
+
+    if (context->token->type == NEW_LINE)
+    {
       context->token_used = 1;
-    context->token_used = 0;
+      while (get_next_token(context) && context->token->type == NEW_LINE)
+        context->token_used = 1;
+      context->token_used = 0;
+    }
   }
 
   if (and_or->nb_children == 0)
@@ -87,10 +91,13 @@ struct ast *parse_pipeline(int *return_value, struct context *context)
       context->token_used = 0;
       break;
     }
-    context->token_used = 1;
-    while (get_next_token(context) && context->token->type == NEW_LINE)
+    if (context->token->type == NEW_LINE)
+    {
       context->token_used = 1;
-    context->token_used = 0;
+      while (get_next_token(context) && context->token->type == NEW_LINE)
+        context->token_used = 1;
+      context->token_used = 0;
+    }
   }
 
   if (pipeline->nb_children == 0)
