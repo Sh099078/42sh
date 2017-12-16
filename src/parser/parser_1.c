@@ -26,10 +26,11 @@ struct ast *parse_list(int *return_value, struct context *context)
       break;
     }
   }
-  //context->token_used = 1;
 
   if (list->nb_children == 0)
     return abort_parsing(list, return_value);
+
+  list->type = LIST;
 
   return list;
 }
@@ -65,6 +66,8 @@ struct ast *parse_and_or(int *return_value, struct context *context)
 
   if (and_or->nb_children == 0)
     return abort_parsing(and_or, return_value);
+
+  and_or->type = AND_OR;
 
   return and_or;
 }
@@ -103,6 +106,8 @@ struct ast *parse_pipeline(int *return_value, struct context *context)
   if (pipeline->nb_children == 0)
     abort_parsing(pipeline, return_value);
 
+  pipeline->type = PIPELINE;
+
   return pipeline;
 }
 
@@ -122,9 +127,7 @@ struct ast *parse_simple_command(int *return_value, struct context *context)
   simple_command->type = SIMPLE_COMMAND;
 
   for (; element; element = parse_element(return_value, context))
-  {
     ast_add_child(simple_command, element, NULL);
-  }
 
   if (simple_command->nb_children == 0)
     abort_parsing(simple_command, return_value);

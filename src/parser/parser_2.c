@@ -26,6 +26,7 @@ struct ast *parse_element(int *return_value, struct context *context)
     ast_destroy(child);
     return NULL;
   }
+
   return_value = return_value;
 
   context->token_used = 1;
