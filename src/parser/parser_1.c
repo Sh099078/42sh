@@ -93,6 +93,9 @@ struct ast *parse_pipeline(int *return_value, struct context *context)
     context->token_used = 0;
   }
 
+  if (pipeline->nb_children == 0)
+    abort_parsing(pipeline, return_value);
+
   return pipeline;
 }
 
@@ -104,25 +107,19 @@ struct ast *parse_command(int *return_value, struct context *context)
 struct ast *parse_simple_command(int *return_value, struct context *context)
 {
   struct ast *simple_command = ast_init();
-  struct ast *prefix = parse_prefix(return_value, context);
-  simple_command->type = SIMPLE_COMMAND;
-  int element_created = 0;
+  struct ast *element = parse_element(return_value, context);
 
   if (!simple_command)
-    return abort_parsing(prefix, return_value);
+    abort_parsing(element, return_value);
 
-  for (; prefix; prefix = parse_prefix(return_value, context))
-    ast_add_child(simple_command, prefix, NULL);
-
-  struct ast *element = parse_element(return_value, context);
+  simple_command->type = SIMPLE_COMMAND;
 
   for (; element; element = parse_element(return_value, context))
   {
     ast_add_child(simple_command, element, NULL);
-    element_created = 1;
   }
 
-  if (!element_created)
+  if (simple_command->nb_children == 0)
     abort_parsing(simple_command, return_value);
 
   return simple_command;
