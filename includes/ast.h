@@ -5,7 +5,7 @@
 
 enum node_type
 {
-  INPUT,
+  INPUT=0,
   LIST,
   AND_OR,
   PIPELINE,
