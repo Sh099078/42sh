@@ -24,11 +24,14 @@ int ast_exec(struct shell_env *env, struct ast *ast)
     return rule_if(env, ast);
     break;
   case INPUT:
-  case RULE_CASE:
+    return input(env, ast);
   case LIST:
+    return list(env, ast);
   case PIPELINE:
+    return pipeline(env, ast);
   case COMMAND:
   case SHELL_COMMAND:
+  case RULE_CASE:
   case FUNCDEF:
   case REDIRECTION:
   case PREFIX:
