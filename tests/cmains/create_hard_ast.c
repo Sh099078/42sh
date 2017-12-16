@@ -20,7 +20,6 @@ struct ast *create_simple_cmd_ast(int argc, char **argv)
   return ast;
 }
 
-// TODO nextToken + ast_incr_capacity
 static int get_next_andor(char **argv)
 {
   // argv is null terminated
