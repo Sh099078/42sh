@@ -1,0 +1,25 @@
+{
+  "name": "Comments and incorrect entries",
+  "tests": [
+    {
+      "name": "Comments 1",
+      "input": "echo a b c # d e f"
+    },
+    {
+      "name": "Comments 2",
+      "input": "ls ; # echo a"
+    },
+    {
+      "name": "Empty",
+      "input": ""
+    },
+    {
+      "name": "Spaces only",
+      "input": "      "
+    },
+    {
+      "name": "Incorrect command",
+      "input": "zelkfjerkgj"
+    }
+  ]
+}

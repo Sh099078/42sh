@@ -1,0 +1,25 @@
+{
+  "name": "Pipes and redirections",
+  "tests": [
+    {
+      "name": "Pipe 1",
+      "input": "echo a | cat -e"
+    },
+    {
+      "name": "Pipe 2",
+      "input": "echo src/ | ls | cat -e"
+    },
+    {
+      "name": "Redir 1",
+      "input": "echo hello world > hello"
+    },
+    {
+      "name": "Redir 2",
+      "input": "cat <hello"
+    },
+    {
+      "name": "Redir 3",
+      "input": "cat hello 1>a 2>b"
+    }
+  ]
+}

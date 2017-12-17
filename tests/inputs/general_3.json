@@ -1,0 +1,17 @@
+{
+  "name": "& and ; tests",
+  "tests": [
+    {
+      "name": "commas",
+      "input": "echo a ; ls ; echo b ; echo c ;"
+    },
+    {
+      "name": "& operator",
+      "input": "ls & echo a & echo b & echo c"
+    },
+    {
+      "name": "mix or & and ;",
+      "input": "echo a ; ls & echo b ; echo c &"
+    }
+  ]
+}
