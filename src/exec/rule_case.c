@@ -1,3 +1,10 @@
+/**
+** @file rule_case.h
+** @brief AST case checking and matching
+** @author Hamza Mebarek
+** @version 1.0
+*/
+
 #include "ast_exec.h"
 
 /**

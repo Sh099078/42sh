@@ -9,6 +9,13 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+/**
+** @file ast_exec.h
+** @brief AST execution and rules functions
+** @author Rod Guillaume & Hamza Mebarek
+** @version 1.0
+*/
+
 #include "ast.h"
 #include "struct.h"
 #include "string.h"

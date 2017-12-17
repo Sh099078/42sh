@@ -1,6 +1,13 @@
 #ifndef AST_PRINTER_H
 #define AST_PRINTER_H
 
+/**
+** @file ast_printer.h
+** @brief AST conversion into dot function
+** @author Hamza Mebarek
+** @version 1.0
+*/
+
 #include "ast.h"
 
 /**
