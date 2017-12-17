@@ -30,11 +30,14 @@ void ast_destroy(struct ast *ast)
     return;
   for (size_t i = 0; i < ast->nb_children; i++)
   {
-    free(ast->values[i]);
+    if (ast->values[i])
+      free(ast->values[i]);
     ast_destroy(ast->children[i]);
   }
   if (ast->children)
     free(ast->children);
+  if (ast->type == WORD || ast->type == PREFIX)
+    free(ast->values[0]);
   if (ast->values)
     free(ast->values);
   free(ast);

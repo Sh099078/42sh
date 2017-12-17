@@ -20,6 +20,8 @@ struct ast *ast_create(int *return_value)
   struct ast *ast = parse_input(return_value, &context);
   if (token.token)
     free(token.token);
+  if (context.line)
+    free(context.line);
   return ast;
 }
 
