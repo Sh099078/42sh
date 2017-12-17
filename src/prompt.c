@@ -11,6 +11,7 @@
 
 int prompt(void)
 {
+  struct ast *ast;
   struct shell_env *env = shell_env_init();
   if (!env)
     return 1;
@@ -18,15 +19,16 @@ int prompt(void)
   int return_value = 0;
   while (1)
   {
-    struct ast *ast = ast_create(&return_value);
+    ast = NULL;
+    ast = ast_create(&return_value);
     if (!ast)
-      break;
+      continue;
     ast_exec(env, ast);
     ast_to_dot(ast);
     ast_destroy(ast);
   }
-
   free(env);
+  ast_destroy(ast);
   return return_value;
 }
 
