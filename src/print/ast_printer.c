@@ -87,14 +87,15 @@ static void nodes_to_dot(struct ast *ast, FILE *f)
   if (!ast)
     return;
 
-  fprintf(f, "\"%p\" [label=\"%s\"]\n", to_void(ast), type_to_char(ast->type));
+  if (ast->type != WORD && ast->type != ASSIGNMENT_WORD)
+    fprintf(f, "\"%p\" [label=\"%s\"]\n", to_void(ast), type_to_char(ast->type));
+  else
+    fprintf(f, "\"%p\" [label=\"%s\"]\n", to_void(ast), ast->values[0]);
+
   for (size_t i = 0; i < ast->nb_children; i++)
   {
-    if (ast->type != ELEMENT && ast->type != PREFIX)
+    if (ast->type != WORD && ast->type != ASSIGNMENT_WORD)
       nodes_to_dot(ast->children[i], f);
-    else
-      fprintf(f, "\"%p\" [label=\"%s\"]\n", to_void(ast->children[0]),
-          ast->values[0]);
     fprintf(f, "\"%p\" -> \"%p\"\n", to_void(ast), to_void(ast->children[i]));
   }
 }
