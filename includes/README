@@ -1,0 +1,28 @@
+AUTHORS
+
+Project leader:
+
+  Loup Federico
+
+Members:
+
+  Rodolphe Guillaume
+  Hamza Mebarek
+
+INSTRUCTIONS MANUAL
+
+To build and run the executable from ./build/ :
+  cmake ..
+  make
+  ./42sh [OPTIONS]
+
+To build the doxygen documentation from ./build/ :
+  cmake ..
+  make doc
+
+FILE ARCHITECTURE
+
+  ./includes/ contains all the file headers.
+  ./src/ contains the source (*.c) files.
+  ./doc/ contains the generated documentation and the Doxyfile.
+  ./tests/ contains the testsuite and all its required files.
