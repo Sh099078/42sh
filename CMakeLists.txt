@@ -26,6 +26,10 @@ add_custom_target(doc
   WORKING_DIRECTORY ..
   COMMENT "Generating Doxygen documentation")
 
+add_custom_target(man
+  COMMAND doxygen doc/42sh.1
+  WORKING_DIRECTORY ..
+  COMMENT "Generating Manual Page")
 
 # TODO
 ## Check for package existence before using them
@@ -35,5 +39,3 @@ add_custom_target(doc
 #else (PACKAGE_FOUND)
 #  message("Doxygen needs to be installed to generate the doxygen documentation")
 #endif (PACKAGE_FOUND)
-
-
