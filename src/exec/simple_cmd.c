@@ -1,7 +1,7 @@
 #include "ast_exec.h"
 
 
-char **cmd_get_args(struct ast *ast, size_t start)
+static char **cmd_get_args(struct ast *ast, size_t start)
 {
   char **argv = malloc(sizeof(char*) * (ast->nb_children - start + 1));
   if (!argv)
@@ -9,16 +9,6 @@ char **cmd_get_args(struct ast *ast, size_t start)
   for (size_t i = 0; i < ast->nb_children; i++) // element_node->WORD_node->val
     argv[i] = ast->children[i + start]->children[0]->values[0];
   return argv;
-}
-
-char *cmd_get_path(char *cmd_name)
-{
-  char *path = malloc(sizeof("/bin/") + strlen(cmd_name));
-  if (!path)
-    return NULL;
-  strcpy(path, "/bin/");
-  path = strcat(path, cmd_name);
-  return path;
 }
 
 int simple_command(struct shell_env *env, struct ast *ast)
