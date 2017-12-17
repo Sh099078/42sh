@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 
 #include "parser.h"
 
@@ -12,6 +13,7 @@ struct ast *parse_prefix(int *return_value, struct context *context)
   context = context;
   return NULL;
 }
+
 
 struct ast *parse_element(int *return_value, struct context *context)
 {
@@ -33,6 +35,11 @@ struct ast *parse_element(int *return_value, struct context *context)
   element->type = ELEMENT;
   ast_add_child(element, child, NULL);
   child->type = WORD;
-  child->values[0] = context->token->token;
+
+  char *token = malloc(sizeof(char) * (strlen(context->token->token + 1)));
+  token[strlen(context->token->token)] = 0;
+  strcpy(token, context->token->token);
+
+  child->values[0] = token;
   return element;
 }
