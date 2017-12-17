@@ -20,7 +20,7 @@ int prompt(void)
   {
     struct ast *ast = ast_create(&return_value);
     if (!ast)
-      return return_value; break;
+      break;
     ast_exec(env, ast);
     ast_to_dot(ast);
     ast_destroy(ast);
