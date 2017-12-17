@@ -9,7 +9,7 @@ int list(struct shell_env *env, struct ast *ast)
   int status = 0;
   for (size_t i = 0; i < ast->nb_children; i++)
   {
-    if (ast->values[i][0] == '&')
+    if (ast->values[i] && ast->values[i][0] == '&')
     {
       pid_t pid = fork();
       if (pid == 0)

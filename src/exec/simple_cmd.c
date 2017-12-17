@@ -6,8 +6,8 @@ char **cmd_get_args(struct ast *ast, size_t start)
   char **argv = malloc(sizeof(char*) * (ast->nb_children - start + 1));
   if (!argv)
     return NULL;
-  for (size_t i = 0; i < ast->nb_children; i++)
-    argv[i] = ast->children[i + start]->values[0];
+  for (size_t i = 0; i < ast->nb_children; i++) // element_node->WORD_node->val
+    argv[i] = ast->children[i + start]->children[0]->values[0];
   return argv;
 }
 
