@@ -25,6 +25,7 @@ int pipeline(struct shell_env *env, struct ast *ast);
 int simple_command(struct shell_env *env, struct ast *ast);
 int and_or(struct shell_env *env, struct ast *ast);
 int rule_if(struct shell_env *env, struct ast *ast);
+int rule_case(struct shell_env *env, struct ast *ast);
 
 /**
  * Executes a bash style for loop
