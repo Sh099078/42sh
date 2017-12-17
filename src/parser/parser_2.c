@@ -36,8 +36,9 @@ struct ast *parse_element(int *return_value, struct context *context)
   ast_add_child(element, child, NULL);
   child->type = WORD;
 
-  char *token = malloc(sizeof(char) * (strlen(context->token->token + 1)));
-  token[strlen(context->token->token)] = 0;
+  size_t size = strlen(context->token->token);
+  char *token = malloc(sizeof(char) * (size + 1));
+  token[size] = 0;
   strcpy(token, context->token->token);
 
   child->values[0] = token;
