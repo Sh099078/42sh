@@ -81,8 +81,22 @@ struct ast
   struct ast **children;
 };
 
+/**
+** Allocates memory to an ast node and initializes its values.
+*/
 struct ast *ast_init();
+
+/**
+** Frees an ast, its values and its children recursively.
+*/
 void ast_destroy(struct ast *ast);
+
+/**
+**  Adds the ast 'child' to the ast 'parent' children vector and the string
+**  'value' to the parents values vector before ncrementing the parents
+**  nb_children integer. If needed, it reallocates the vectors 'children' and
+**  'values' of 'parent'.
+*/
 int ast_add_child(struct ast *parent, struct ast *child, char *value);
 
 /* The struct context is used during the parsing to keep in memory
