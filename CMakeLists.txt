@@ -27,9 +27,16 @@ add_custom_target(doc
   COMMENT "Generating Doxygen documentation")
 
 add_custom_target(man
-  COMMAND doxygen doc/42sh.1
+  COMMAND man doc/42sh.1
   WORKING_DIRECTORY ..
   COMMENT "Generating Manual Page")
+
+add_custom_target(check
+  COMMAND bundle install --path=vendor/bundle
+  COMMAND ./testsuite.rb
+  DEPENDS ../build/42sh
+  WORKING_DIRECTORY ../tests/
+  COMMENT "Launching testsuite")
 
 # TODO
 ## Check for package existence before using them
