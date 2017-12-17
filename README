@@ -12,13 +12,23 @@ Members:
 INSTRUCTIONS MANUAL
 
 To build and run the executable from ./build/ :
-  cmake ..
+
   make
   ./42sh [OPTIONS]
 
 To build the doxygen documentation from ./build/ :
-  cmake ..
+
   make doc
+
+To build the man page :
+
+  make man
+
+To launch the tests :
+
+Prerequisites : bundle gem installed
+
+  make check
 
 FILE ARCHITECTURE
 
