@@ -177,13 +177,6 @@ static int env_var_list_update_var(struct shell_env *env, int index,
   vars->list[index] = keyvalue;
   return 0;
 }
-/**
- * add variable to the variable list of shell environment
- * @param  env   shell environment
- * @param  name  key of the variable
- * @param  value value of the variable
- * @return       1 if variable has been inserted, -1 otherwise
- */
 int add_variable(struct shell_env *env, char *name, char *value)
 {
   if (!env || !name || !strlen(name))
