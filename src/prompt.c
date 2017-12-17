@@ -8,8 +8,9 @@
 #include "struct.h"
 #include "struct.h"
 #include "ast_printer.h"
+#include "options.h"
 
-int prompt(void)
+int prompt(struct options options)
 {
   struct ast *ast;
   struct shell_env *env = shell_env_init();
@@ -24,7 +25,8 @@ int prompt(void)
     if (!ast)
       continue;
     ast_exec(env, ast);
-    ast_to_dot(ast);
+    if (options.shopt_vars & 1)
+      ast_to_dot(ast);
     ast_destroy(ast);
   }
   free(env);
@@ -32,10 +34,11 @@ int prompt(void)
   return return_value;
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
   FILE *input = fdopen(0, "r");
   if (!input)
     return 2;
-  return prompt();
+  struct options options = options_get(argc, argv);
+  return prompt(options);
 }
