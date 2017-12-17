@@ -3,9 +3,9 @@
 
 /**
 ** @file options.h
-** @brief
+** @brief Shell options parsing functions
 ** @author Rod Guillaume
-** @version 0.5
+** @version 1.0
 ** @date 2017-11-28
 */
 
@@ -13,15 +13,6 @@
 #include <string.h>
 #include <stdio.h>
 #include <err.h>
-
-/***
- * GNU long options
- *
- * When typing bash --version --help only the help is printed on stdout
- * Therefore, we'll just assume that only the last long option is really set
- *
- * TODO Ask an ACU
- */
 
 /**
 ** @brief shopt built-in variables
@@ -51,6 +42,12 @@ struct options
   size_t files_len;
 };
 
+/**
+ * Parses options given to 42sh program
+ * @param  argc size of the argv strings array
+ * @param  argv strings array, containing all arguments given to 42sh
+ * @return      options structure containing all the flags
+ */
 struct options options_get(int argc, char *argv[]);
 
 #endif /* OPTIONS_H */
