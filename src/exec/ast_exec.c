@@ -2,47 +2,23 @@
 
 int ast_exec(struct shell_env *env, struct ast *ast)
 {
-  ast = ast;
-  switch (ast->type)
+  size_t dispatch_len = SEGFAULT; // last enum element
+  int (*func[])(struct shell_env*, struct ast*) =
   {
-  case AND_OR:
-    return and_or(env, ast);
-    break;
-  case SIMPLE_COMMAND:
-    return simple_command(env, ast);
-    break;
-  case RULE_FOR:
-    return rule_for(env, ast);
-    break;
-  case RULE_WHILE:
-    return rule_while(env, ast);
-    break;
-  case RULE_UNTIL:
-    return rule_until(env, ast);
-    break;
-  case RULE_IF:
-    return rule_if(env, ast);
-    break;
-  case INPUT:
-    return input(env, ast);
-  case LIST:
-    return list(env, ast);
-  case PIPELINE:
-    return pipeline(env, ast);
-  case COMMAND:
-  case SHELL_COMMAND:
-  case RULE_CASE:
-  case FUNCDEF:
-  case REDIRECTION:
-  case PREFIX:
-  case ELEMENT:
-  case DO_GROUP:
-  case CASE_CLAUSE:
-  case CASE_ITEM:
-  case COMPOUND_LIST:
-  default:
-    warnx("AST TYPE %d not handled yet", ast->type);
-    return 1;
-    break;
+    input, list, and_or, pipeline, 0, simple_command, 0,
+    0, 0, 0, 0, 0, rule_for,
+    rule_while, rule_until, 0, rule_if, 0, 0, 0, 0, 0, 0, 0
+  };
+  for (size_t i = 0; i < dispatch_len; i++)
+  {
+    if (ast->type == i)
+    {
+      if (func[i])
+        return func[i](env, ast);
+      else
+        break;
+    }
   }
+  warnx("AST TYPE %d not handled yet", ast->type);
+  return 1;
 }
