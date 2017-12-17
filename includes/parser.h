@@ -18,6 +18,9 @@ struct ast *abort_parsing(struct ast *ast, int *return_value);
 */
 struct ast *ast_create(int *return_value);
 
+/**
+**  This function parses the 'input' rule of the grammar.
+**/
 struct ast *parse_input(int *return_value, struct context *context);
 
 #endif /* PARSER_H */
