@@ -23,7 +23,6 @@ set_property(DIRECTORY PROPERTY ADDITIONAL_MAKE_CLEAN_FILES
 
 add_custom_target(doc
   COMMAND doxygen doc/Doxyfile
-  COMMAND ${BROWSER} doc/html/index.html
   WORKING_DIRECTORY ..
   COMMENT "Generating Doxygen documentation")
 

@@ -11,6 +11,8 @@
 
 # Ignored directories
 build/
+doc/html/
+doc/latex
 
 # My usual ignored files
 *.txt

@@ -1,6 +1,12 @@
 #ifndef AST_H
 #define AST_H
 
+/**
+** \file ast.h
+** \brief Main structures and ast manipulation functions
+** \author Loup Federico
+** \version 1.0
+**/
 #include <stddef.h>
 
 enum node_type

@@ -1,6 +1,13 @@
 #ifndef PARSER_1_H
 #define PARSER_1_H
 
+/**
+** \file ast.h
+** \brief The functions responsible of parsing an ast from the input (2).
+** \author Loup Federico
+** \version 1.0
+**/
+
 #include "ast.h"
 
 /**

@@ -1,6 +1,13 @@
 #ifndef LEXER_H
 #define LEXER_H
 
+/**
+** \file ast.h
+** \brief Gives an interface for the parser to communicate with the lexer.
+** \author Loup Federico
+** \version 1.0
+**/
+
 #include "ast.h"
 
 /*
