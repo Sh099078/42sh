@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 project(42sh)
 
 # VARS
-set(EXECUTABLE_OUTPUT_PATH ../)
+set(EXECUTABLE_OUTPUT_PATH .)
 set(BROWSER chromium)
 file(GLOB_RECURSE SRC src/*.c)
 file(GLOB_RECURSE HDR build/*.h)
@@ -18,8 +18,8 @@ target_link_libraries(42sh readline)
 # CUSTOM RULES
 
 set_property(DIRECTORY PROPERTY ADDITIONAL_MAKE_CLEAN_FILES
-  "${EXECUTABLE_OUTPUT_PATH}/doc/latex"
-  "${EXECUTABLE_OUTPUT_PATH}/doc/html")
+  "../doc/latex"
+  "../doc/html")
 
 add_custom_target(doc
   COMMAND doxygen doc/Doxyfile
