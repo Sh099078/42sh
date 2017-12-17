@@ -2,8 +2,8 @@
 #define STRUCT_H
 
 /**
-** @file ast_exec.h
-** @brief AST execution functions
+** @file struct.h
+** @brief Shell environment structure functions
 ** @author Loup Federico, Rod Guillaume
 ** @version 1.0
 ** @date 2017-12-17
