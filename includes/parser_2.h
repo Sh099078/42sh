@@ -3,10 +3,29 @@
 
 #include "ast.h"
 
+/**
+**  This function parses the 'shell_command' rule of the grammar.
+**/
 struct ast *parser_shell_command(int *return_value, struct context *context);
+
+/**
+**  This function parses the 'funcdef' rule of the grammar.
+**/
 struct ast *parse_funcdef(int *return_value, struct context *context);
+
+/**
+**  This function parses the 'redirection' rule of the grammar.
+**/
 struct ast *parse_redirection(int *return_value, struct context *context);
+
+/**
+**  This function parses the 'parse_prefix' rule of the grammar.
+**/
 struct ast *parse_prefix(int *return_value, struct context *context);
+
+/**
+**  This function parses the 'parse_element' rule of the grammar.
+**/
 struct ast *parse_element(int *return_value, struct context *context);
 
 #endif /* PARSER_2_H */
