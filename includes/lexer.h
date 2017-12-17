@@ -2,7 +2,7 @@
 #define LEXER_H
 
 /**
-** \file ast.h
+** \file lexer.h
 ** \brief Gives an interface for the parser to communicate with the lexer.
 ** \author Loup Federico
 ** \version 1.0

@@ -2,7 +2,7 @@
 #define PARSER_3_H
 
 /**
-** \file ast.h
+** \file parser_3.h
 ** \brief The functions responsible of parsing an ast from the input (4).
 ** \author Loup Federico
 ** \version 1.0
