@@ -49,20 +49,24 @@ static struct ast *ast_incr_capacity(struct ast *ast)
   return ast;
 }
 
-struct ast *create_and_or_ast(char **argv)
+struct ast *create_and_or_ast(int argc, char **argv)
 {
   struct ast *ast = ast_init();
-  // loop with i
   size_t nextCmd = 0; // next simple command index
-  size_t child = 0;
   int nextAndOr = get_next_andor(argv); // get index of next && || operator
   while (nextAndOr > 0)
   {
-    if (child == ast->capacity && !ast_incr_capacity(ast))
+    if (ast->nb_children == ast->capacity && !ast_incr_capacity(ast))
       return NULL;
-    ast->children[child++] = create_simple_cmd_ast(nextAndOr, argv + nextCmd);
+    ast->children[ast->nb_children++] = create_simple_cmd_ast(nextAndOr,
+                                                              argv + nextCmd);
     nextCmd += nextAndOr;
     nextAndOr = get_next_andor(argv); // get index of next && || operator
   }
+  if (child == ast->capacity && !ast_incr_capacity(ast))
+    return NULL;
+  ast->children[ast->nb_children] = create_simple_cmd_ast(argc - nextCmd,
+                                                          argv + nextCmd);
+  ast->type = AND_OR;
   return ast;
 }

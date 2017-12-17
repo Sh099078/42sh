@@ -1,6 +1,5 @@
 CC = gcc
-CFLAGS = -std=c99 -pedantic -Wall -Wextra -Werror -fsanitize=address
-DEBUG = -g #-fsanitize=address
+CFLAGS := -std=c99 -pedantic -Wall -Wextra -Werror -g #-fsanitize=address
 # LDFLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lm
 
 MODULES   = exec utilities
@@ -10,13 +9,13 @@ SRC       = $(filter-out cmains/options.c ../src/exec/rule_case.c, \
 INCLUDES  = ../includes
 OBJ = $(SRC:.c=.o)
 
-BIN = bash
+BIN = 42sh-testings
 
 .DEFAULT_GOAL := all
 .PHONY: all clean
 
 all: $(SRC)
-	$(CC) -I$(INCLUDES) $(CFLAGS) -g $(SRC) -o ${BIN}
+	$(CC) -I$(INCLUDES) $(CFLAGS) $(SRC) -o ${BIN}
 
 clean:
 	${RM} ${OBJ} ${BIN}
