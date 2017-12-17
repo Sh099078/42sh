@@ -33,7 +33,7 @@ static struct ast *ast_incr_capacity(struct ast *ast)
 {
   int new_capacity = ast->capacity * 2;
   void *tmp_children = realloc(ast->children,
-                               sizeof(struct(ast)) * new_capacity);
+                               sizeof(struct ast*) * new_capacity);
   if (!tmp_children)
     return NULL;
   void *tmp_values = realloc(ast->values,
@@ -49,13 +49,13 @@ static struct ast *ast_incr_capacity(struct ast *ast)
   return ast;
 }
 
-struct ast *create_and_or_ast(int argc, char **argv)
+struct ast *create_and_or_ast(char **argv)
 {
   struct ast *ast = ast_init();
   // loop with i
-  int nextCmd = 0; // next simple command index
+  size_t nextCmd = 0; // next simple command index
+  size_t child = 0;
   int nextAndOr = get_next_andor(argv); // get index of next && || operator
-  int child = 0;
   while (nextAndOr > 0)
   {
     if (child == ast->capacity && !ast_incr_capacity(ast))
