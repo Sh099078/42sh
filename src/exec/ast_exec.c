@@ -7,7 +7,7 @@ int ast_exec(struct shell_env *env, struct ast *ast)
   {
     input, list, and_or, pipeline, 0, simple_command, 0,
     0, 0, 0, 0, 0, rule_for,
-    rule_while, rule_until, 0, rule_if, 0, 0, 0, 0, 0, 0, 0
+    rule_while, rule_until, rule_case, rule_if, 0, 0, 0, 0, 0, 0, 0
   };
   for (size_t i = 0; i < dispatch_len; i++)
   {
