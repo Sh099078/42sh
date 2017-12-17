@@ -21,7 +21,9 @@ struct ast *parse_element(int *return_value, struct context *context)
   struct ast *child = ast_init();
 
   if (!(get_next_token(context) && element && child) ||
-      context->token->type == NEW_LINE)
+      context->token->type != TOKEN/*== NEW_LINE*/ ||
+      !strcmp(context->token->token, ";") ||
+      !strcmp(context->token->token, "&"))
   {
     context->token_used = 0;
     ast_destroy(element);

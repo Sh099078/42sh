@@ -18,7 +18,10 @@ struct ast *parse_list(int *return_value, struct context *context)
     get_next_token(context);
     char *token = context->token->token;
     if (!(strcmp(token, ";") && strcmp(token, "&")))
+    {
+      context->token_used = 1;
       ast_add_child(list, and_or, token);
+    }
     else
     {
       ast_add_child(list, and_or, NULL);
