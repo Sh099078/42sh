@@ -25,6 +25,14 @@ int pipeline(struct shell_env *env, struct ast *ast);
 int simple_command(struct shell_env *env, struct ast *ast);
 int and_or(struct shell_env *env, struct ast *ast);
 int rule_if(struct shell_env *env, struct ast *ast);
+
+/**
+** Calls case_clause() on all children of the given tree
+** Gets the case from the value of the first children's first value and calls
+** case_clause through all the children to match the case itself.
+** @param  the environment env, the tree ast we want to check
+** @return  0 if no case matches, else returns 1
+*/
 int rule_case(struct shell_env *env, struct ast *ast);
 
 /**

@@ -1,14 +1,14 @@
 #include "ast_exec.h"
 
 /**
- * Checks if a node's children match the case or not
- * Goes through the whole children list of the ast and compares their values
- * with the given case.
- * @param  the environment env, the tree ast we want to check and the var which
- * represents the name of the case.
- * @return  -1 no case matches, else returns the ast_exec of the che matching
- * node
- */
+** Checks if a node's children match the case or not
+** Goes through the whole children list of the ast and compares their values
+** with the given case.
+** @param  the environment env, the tree ast we want to check and the var which
+** represents the name of the case.
+** @return  -1 no case matches, else returns the ast_exec of the che matching
+** node
+*/
 int case_clause(struct shell_env *env, struct ast *ast, char *var)
 {
   int i = 0;
